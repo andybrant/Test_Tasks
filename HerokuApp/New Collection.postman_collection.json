@@ -14,14 +14,14 @@
           "name": "1.1. ping (GET)",
           "item": [
             {
-              "name": "Ping - HealthCheck (pos_1)",
+              "name": "Успешный GET‑запрос без параметров",
               "event": [
                 {
                   "listen": "test",
                   "script": {
                     "type": "text/javascript",
                     "exec": [
-                      "pm.test(\"Status code is 201\", function () {\n    pm.response.to.have.status(201);\n});\n\npm.test(\"Response body is 'Created'\", function () {\n    pm.expect(pm.response.text()).to.eql('Created');\n});"
+                      "pm.test(\"Status code is 201\", function () {\n    pm.response.to.have.status(201);\n});\n\npm.test(\"Response body format is 'text/plain' and contains 'Created'\", function () {\n    pm.expect(pm.response.text()).to.eql('Created');\n});"
                     ]
                   }
                 }
@@ -42,14 +42,14 @@
               "response": []
             },
             {
-              "name": "Ping - HealthCheck (pos_2)",
+              "name": "Запрос с произвольными query‑параметрами",
               "event": [
                 {
                   "listen": "test",
                   "script": {
                     "type": "text/javascript",
                     "exec": [
-                      "pm.test(\"Status code is 201\", function () {\n    pm.response.to.have.status(201);\n});\n\npm.test(\"Response body is 'Created'\", function () {\n    pm.expect(pm.response.text()).to.eql('Created');\n});"
+                      "pm.test(\"Status code is 201\", function () {\n    pm.response.to.have.status(201);\n});\n\npm.test(\"Response body format is 'text/plain' and contains 'Created'\", function () {\n    pm.expect(pm.response.text()).to.eql('Created');\n});"
                     ]
                   }
                 }
@@ -80,14 +80,14 @@
               "response": []
             },
             {
-              "name": "Ping - HealthCheck (pos_3)",
+              "name": "Запрос с нестандартными, но валидными заголовками",
               "event": [
                 {
                   "listen": "test",
                   "script": {
                     "type": "text/javascript",
                     "exec": [
-                      "pm.test(\"Status code is 201\", function () {\n    pm.response.to.have.status(201);\n});\n\npm.test(\"Response body is 'Created'\", function () {\n    pm.expect(pm.response.text()).to.eql('Created');\n});"
+                      "pm.test(\"Status code is 201\", function () {\n    pm.response.to.have.status(201);\n});\n\npm.test(\"Response body format is 'text/plain' and contains 'Created'\", function () {\n    pm.expect(pm.response.text()).to.eql('Created');\n});"
                     ]
                   }
                 }
@@ -117,7 +117,7 @@
               "response": []
             },
             {
-              "name": "Ping - HealthCheck (neg_1)",
+              "name": "Ping (POST вместо GET)",
               "event": [
                 {
                   "listen": "test",
@@ -154,7 +154,7 @@
               "response": []
             },
             {
-              "name": "Ping - HealthCheck (neg_2)",
+              "name": "Ping (PUT/PATCH/DELETE вместо GET)",
               "event": [
                 {
                   "listen": "test",
@@ -182,14 +182,14 @@
               "response": []
             },
             {
-              "name": "Ping - HealthCheck (neg_3)",
+              "name": "Ping с недопустимым Content‑Type",
               "event": [
                 {
                   "listen": "test",
                   "script": {
                     "type": "text/javascript",
                     "exec": [
-                      "pm.test(\"Status code is 201\", function () {\n    pm.response.to.have.status(201);\n});\n\npm.test(\"Response body is 'Created'\", function () {\n    pm.expect(pm.response.text()).to.eql('Created');\n});"
+                      "pm.test(\"Status code is 201\", function () {\n    pm.response.to.have.status(201);\n});\n\npm.test(\"Response body format is 'text/plain' and contains 'Created'\", function () {\n    pm.expect(pm.response.text()).to.eql('Created');\n});"
                     ]
                   }
                 }
@@ -215,7 +215,7 @@
               "response": []
             },
             {
-              "name": "Ping - HealthCheck (neg_4)",
+              "name": "Ping (с очень длинным URL)",
               "event": [
                 {
                   "listen": "test",
@@ -259,14 +259,14 @@
           "name": "2.1. auth (POST)",
           "item": [
             {
-              "name": "Create_token (pos_1)",
+              "name": "Успешная аутентификация с валидными учётными данными",
               "event": [
                 {
                   "listen": "test",
                   "script": {
                     "type": "text/javascript",
                     "exec": [
-                      "st(\"Status code is 200\", function () {\r\n    pm.response.to.have.status(200);\r\n});\r\n\r\npm.test(\"Response is JSON\", function () {\r\n    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\r\n});\r\n\r\nconst jsonData = pm.response.json();\r\npm.test(\"Response contains token\", function () {\r\n    pm.expect(jsonData).to.have.property('token');\r\n    pm.expect(jsonData.token).to.be.a('string')\r\n    .and.to.not.be.empty;\r\n});\r\n\r\npm.environment.set(\"access_token\", jsonData.token);\r\npm.test(\"Token is set in environment\", function () {\r\n    pm.expect(pm.environment.get(\"access_token\")).to.not.be.null;\r\n});"
+                      "pm.test(\"Status code is 200\", function () {\r\n    pm.response.to.have.status(200);\r\n});\r\n\r\nconst jsonData = pm.response.json();\r\npm.test(\"Response contains token\", function () {\r\n    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\r\n    pm.expect(jsonData).to.have.property('token');\r\n    pm.expect(jsonData.token).to.be.a('string').and.to.not.be.empty;\r\n});"
                     ]
                   }
                 }
@@ -306,61 +306,36 @@
               "response": []
             },
             {
-              "name": "Create_token (neg_1)",
-              "event": [
-                {
-                  "listen": "test",
-                  "script": {
-                    "type": "text/javascript",
-                    "exec": [
-                      "pm.test(\"Status code is 401\", function () {\r\n    pm.response.to.have.status(401);\r\n});\r\n\r\npm.test(\"Response is JSON\", function () {\r\n    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\r\n});\r\n\r\nconst jsonData = pm.response.json();\r\npm.test(\"Response contains reason\", function () {\r\n    pm.expect(jsonData).to.have.property('reason');\r\n    pm.expect(jsonData.reason).to.be.a('string')\r\n    .and.to.not.be.empty;\r\n});\r\n\r\npm.test(\"Reason is 'Bad credentials'\", function () {\r\n    pm.expect(jsonData.reason).to.equal('Bad credentials');\r\n});\r\n\r\npm.test(\"Response not contains token\", function () {\r\n    pm.expect(jsonData).to.not.have.property('token');\r\n});"
-                    ]
-                  }
-                }
-              ],
-              "protocolProfileBehavior": {
-                "disabledSystemHeaders": {
-                  "content-type": true
-                }
-              },
+              "name": "Проверка токена на валидность",
               "request": {
-                "method": "POST",
-                "header": [
-                  {
-                    "key": "Content-Type",
-                    "value": "application/json"
-                  }
-                ],
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\r\n    \"username\" : \"{{admin_username}}\",\r\n    \"password\" : \"nonvalid_password\"\r\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                },
+                "method": "GET",
+                "header": [],
                 "url": {
-                  "raw": "{{HerokuApp}}/auth",
-                  "host": [
-                    "{{HerokuApp}}"
-                  ],
-                  "path": [
-                    "auth"
-                  ]
+                  "raw": ""
                 }
               },
               "response": []
             },
             {
-              "name": "Create_token (neg_2)",
+              "name": "Повторная аутентификация получает новый токен",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": ""
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Аутентификация с несуществующим username",
               "event": [
                 {
                   "listen": "test",
                   "script": {
                     "type": "text/javascript",
                     "exec": [
-                      "pm.test(\"Status code is 401\", function () {\r\n    pm.response.to.have.status(401);\r\n});\r\n\r\npm.test(\"Response is JSON\", function () {\r\n    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\r\n});\r\n\r\nconst jsonData = pm.response.json();\r\npm.test(\"Response contains reason\", function () {\r\n    pm.expect(jsonData).to.have.property('reason');\r\n    pm.expect(jsonData.reason).to.be.a('string')\r\n    .and.to.not.be.empty;\r\n});\r\n\r\npm.test(\"Reason is 'Bad credentials'\", function () {\r\n    pm.expect(jsonData.reason).to.equal('Bad credentials');\r\n});\r\n\r\npm.test(\"Response not contains token\", function () {\r\n    pm.expect(jsonData).to.not.have.property('token');\r\n});"
+                      "pm.test(\"Status code is 401\", function () {\r\n    pm.response.to.have.status(401);\r\n});\r\n\r\npm.test(\"Response is JSON\", function () {\r\n    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\r\n});\r\n\r\nconst jsonData = pm.response.json();\r\npm.test(\"Response contains reason\", function () {\r\n    pm.expect(jsonData).to.have.property('reason');\r\n    pm.expect(jsonData.reason).to.be.a('string')\r\n        .and.to.not.be.empty;\r\n});\r\n\r\npm.test(\"Reason is 'Bad credentials'\", function () {\r\n    pm.expect(jsonData.reason).to.equal('Bad credentials');\r\n});\r\n\r\npm.test(\"Response not contains token\", function () {\r\n    pm.expect(jsonData).to.not.have.property('token');\r\n});"
                     ]
                   }
                 }
@@ -400,14 +375,61 @@
               "response": []
             },
             {
-              "name": "Create_token (neg_3)",
+              "name": "Аутентификация с невалидным password",
               "event": [
                 {
                   "listen": "test",
                   "script": {
                     "type": "text/javascript",
                     "exec": [
-                      "pm.test(\"Status code is 401\", function () {\r\n    pm.response.to.have.status(401);\r\n});\r\n\r\npm.test(\"Response is JSON\", function () {\r\n    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\r\n});\r\n\r\nconst jsonData = pm.response.json();\r\npm.test(\"Response contains reason\", function () {\r\n    pm.expect(jsonData).to.have.property('reason');\r\n    pm.expect(jsonData.reason).to.be.a('string')\r\n    .and.to.not.be.empty;\r\n});\r\n\r\npm.test(\"Reason is 'Bad credentials'\", function () {\r\n    pm.expect(jsonData.reason).to.equal('Bad credentials');\r\n});\r\n\r\npm.test(\"Response not contains token\", function () {\r\n    pm.expect(jsonData).to.not.have.property('token');\r\n});"
+                      "pm.test(\"Status code is 401\", function () {\r\n    pm.response.to.have.status(401);\r\n});\r\n\r\npm.test(\"Response is JSON\", function () {\r\n    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\r\n});\r\n\r\nconst jsonData = pm.response.json();\r\npm.test(\"Response contains reason\", function () {\r\n    pm.expect(jsonData).to.have.property('reason');\r\n    pm.expect(jsonData.reason).to.be.a('string')\r\n        .and.to.not.be.empty;\r\n});\r\n\r\npm.test(\"Reason is 'Bad credentials'\", function () {\r\n    pm.expect(jsonData.reason).to.equal('Bad credentials');\r\n});\r\n\r\npm.test(\"Response not contains token\", function () {\r\n    pm.expect(jsonData).to.not.have.property('token');\r\n});"
+                    ]
+                  }
+                }
+              ],
+              "protocolProfileBehavior": {
+                "disabledSystemHeaders": {
+                  "content-type": true
+                }
+              },
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"username\" : \"{{admin_username}}\",\r\n    \"password\" : \"nonvalid_password\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{HerokuApp}}/auth",
+                  "host": [
+                    "{{HerokuApp}}"
+                  ],
+                  "path": [
+                    "auth"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Аутентификация (пустое тело запроса)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 401\", function () {\r\n    pm.response.to.have.status(401);\r\n});\r\n\r\npm.test(\"Response is JSON\", function () {\r\n    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\r\n});\r\n\r\nconst jsonData = pm.response.json();\r\npm.test(\"Response contains reason\", function () {\r\n    pm.expect(jsonData).to.have.property('reason');\r\n    pm.expect(jsonData.reason).to.be.a('string')\r\n        .and.to.not.be.empty;\r\n});\r\n\r\npm.test(\"Reason is 'Bad credentials'\", function () {\r\n    pm.expect(jsonData.reason).to.equal('Bad credentials');\r\n});\r\n\r\npm.test(\"Response not contains token\", function () {\r\n    pm.expect(jsonData).to.not.have.property('token');\r\n});"
                     ]
                   }
                 }
@@ -447,7 +469,7 @@
               "response": []
             },
             {
-              "name": "Create_token (neg_4)",
+              "name": "Аутентификация (отсутствует поле username)",
               "event": [
                 {
                   "listen": "test",
@@ -494,7 +516,7 @@
               "response": []
             },
             {
-              "name": "Create_token (neg_5)",
+              "name": "Аутентификация (отсутствует поле password)",
               "event": [
                 {
                   "listen": "test",
@@ -541,7 +563,7 @@
               "response": []
             },
             {
-              "name": "Create_token (neg_6)",
+              "name": "Аутентификация (пустые значения в полях)",
               "event": [
                 {
                   "listen": "test",
@@ -588,7 +610,7 @@
               "response": []
             },
             {
-              "name": "Create_token (neg_7)",
+              "name": "Аутентификация (невалидный JSON в теле запроса)",
               "event": [
                 {
                   "listen": "test",
@@ -635,7 +657,7 @@
               "response": []
             },
             {
-              "name": "Create_token (neg_8)",
+              "name": "Аутентификация (неверный Content-Type в Header)",
               "event": [
                 {
                   "listen": "test",
@@ -682,7 +704,7 @@
               "response": []
             },
             {
-              "name": "Create_token (neg_9)",
+              "name": "Аутентификация (SQL-инъекция в поле username)",
               "event": [
                 {
                   "listen": "test",
@@ -729,7 +751,7 @@
               "response": []
             },
             {
-              "name": "Create_token (neg_10)",
+              "name": "Аутентификация (дополнительные поля в теле запроса)",
               "event": [
                 {
                   "listen": "test",
@@ -776,7 +798,7 @@
               "response": []
             },
             {
-              "name": "Create_token (neg_11)",
+              "name": "Аутентификация (int вместо string в полях)",
               "event": [
                 {
                   "listen": "test",
@@ -823,7 +845,7 @@
               "response": []
             },
             {
-              "name": "Create_token (neg_12)",
+              "name": "Аутентификация (GET вместо POST)",
               "event": [
                 {
                   "listen": "test",
@@ -880,14 +902,14 @@
           "name": "3.1. booking (GET)",
           "item": [
             {
-              "name": "Get_bookings_list (pos_1)",
+              "name": "Получение бронирований (без доп.параметров = все)",
               "event": [
                 {
                   "listen": "test",
                   "script": {
                     "type": "text/javascript",
                     "exec": [
-                      "pm.test(\"Status code is 200\", function () {\n    pm.response.to.have.status(200);\n});\n\npm.test(\"BookingIDs are returned\", function () {\n    const jsonData = pm.response.json();\n    pm.expect(jsonData).to.be.an('array')\n        .and.to.have.lengthOf.at.least(1);\n    for (let i = 0; i < jsonData.length; i++) {\n        pm.expect(jsonData[i]).to.have.property('bookingid');\n    }\n});\n\npm.test(\"Booking's ID has a correct format\", function () {\n    const bookings = pm.response.json();\n    pm.expect(bookings[0].bookingid).to.be.a('number')\n    .and.to.be.above(0)\n    .and.to.satisfy(Number.isInteger);\n});"
+                      "pm.test(\"Status code is 200\", function () {\n    pm.response.to.have.status(200);\n});\n\npm.test(\"BookingIDs are returned and have correct format\", function () {\n    const jsonData = pm.response.json();\n    pm.expect(jsonData).to.be.an('array')\n        .and.to.have.lengthOf.at.least(1);\n    for (let i = 0; i < jsonData.length; i++) {\n        pm.expect(jsonData[i]).to.have.property('bookingid');\n    }\n    pm.expect(jsonData[0].bookingid).to.be.a('number')\n    .and.to.be.above(0)\n    .and.to.satisfy(Number.isInteger);\n});"
                     ]
                   }
                 }
@@ -917,14 +939,14 @@
               "response": []
             },
             {
-              "name": "Get_bookings_list (+firstname) (pos_2)",
+              "name": "Получение бронирований с фильтром по firstname",
               "event": [
                 {
                   "listen": "test",
                   "script": {
                     "type": "text/javascript",
                     "exec": [
-                      "pm.test(\"Status code is 200\", function () {\n    pm.response.to.have.status(200);\n});\n\npm.test(\"BookingIDs are returned\", function () {\n    const jsonData = pm.response.json();\n    pm.expect(jsonData).to.be.an('array')\n        .and.to.have.lengthOf.at.least(1);\n    for (let i = 0; i < jsonData.length; i++) {\n        pm.expect(jsonData[i]).to.have.property('bookingid');\n    }\n});\n\npm.test(\"Booking's ID has a correct format\", function () {\n    const bookings = pm.response.json();\n    pm.expect(bookings[0].bookingid).to.be.a('number')\n    .and.to.be.above(0)\n    .and.to.satisfy(Number.isInteger);\n});"
+                      "pm.test(\"Status code is 200\", function () {\n    pm.response.to.have.status(200);\n});\n\n\nconst jsonData = pm.response.json();\npm.expect(jsonData).to.be.an('array');\nif (jsonData.length > 0) {\n    pm.expect(jsonData[0]).to.have.property('bookingid');\n    pm.expect(jsonData[0].bookingid).to.be.a('number')\n        .and.to.be.above(0)\n        .and.to.satisfy(Number.isInteger);\n}\n\nconst urlParams = new URLSearchParams(pm.request.url.getQueryString());\nconst requestParam = urlParams.get('firstname');\npm.sendRequest({\n    url: `${pm.environment.get(\"HerokuApp\")}/booking/${jsonData[0].bookingid}`,\n    method: \"GET\"\n}, function (err, response) {\n    if (err) {\n        console.error(err);\n        return;\n    }\n    const booking = response.json();\n    pm.collectionVariables.set(\"paramCheck\", booking.firstname);\n\n    pm.test(\"Bookings are filtered on the given basis\", function () {\n        pm.expect(pm.collectionVariables.get(\"paramCheck\")).to.eql(requestParam);\n    });\n});\n\n"
                     ]
                   }
                 }
@@ -960,14 +982,14 @@
               "response": []
             },
             {
-              "name": "Get_bookings_list (+lastname) (pos_3)",
+              "name": "Получение бронирований с фильтром по lastname",
               "event": [
                 {
                   "listen": "test",
                   "script": {
                     "type": "text/javascript",
                     "exec": [
-                      "pm.test(\"Status code is 200\", function () {\n    pm.response.to.have.status(200);\n});\n\npm.test(\"BookingIDs are returned\", function () {\n    const jsonData = pm.response.json();\n    pm.expect(jsonData).to.be.an('array')\n        .and.to.have.lengthOf.at.least(1);\n    for (let i = 0; i < jsonData.length; i++) {\n        pm.expect(jsonData[i]).to.have.property('bookingid');\n    }\n});\n\npm.test(\"Booking's ID has a correct format\", function () {\n    const bookings = pm.response.json();\n    pm.expect(bookings[0].bookingid).to.be.a('number')\n    .and.to.be.above(0)\n    .and.to.satisfy(Number.isInteger);\n});"
+                      "pm.test(\"Status code is 200\", function () {\n    pm.response.to.have.status(200);\n});\n\n\nconst jsonData = pm.response.json();\npm.expect(jsonData).to.be.an('array');\nif (jsonData.length > 0) {\n    pm.expect(jsonData[0]).to.have.property('bookingid');\n    pm.expect(jsonData[0].bookingid).to.be.a('number')\n        .and.to.be.above(0)\n        .and.to.satisfy(Number.isInteger);\n}\n\nconst urlParams = new URLSearchParams(pm.request.url.getQueryString());\nconst requestParam = urlParams.get('lastname');\npm.sendRequest({\n    url: `${pm.environment.get(\"HerokuApp\")}/booking/${jsonData[0].bookingid}`,\n    method: \"GET\"\n}, function (err, response) {\n    if (err) {\n        console.error(err);\n        return;\n    }\n    const booking = response.json();\n    pm.collectionVariables.set(\"paramCheck\", booking.lastname);\n\n    pm.test(\"Bookings are filtered on the given basis\", function () {\n        pm.expect(pm.collectionVariables.get(\"paramCheck\")).to.eql(requestParam);\n    });\n});\n\n"
                     ]
                   }
                 }
@@ -1003,14 +1025,14 @@
               "response": []
             },
             {
-              "name": "Get_bookings_list (+checkin) (pos_4)",
+              "name": "Получение бронирований с фильтром по checkin",
               "event": [
                 {
                   "listen": "test",
                   "script": {
                     "type": "text/javascript",
                     "exec": [
-                      "pm.test(\"Status code is 200\", function () {\n    pm.response.to.have.status(200);\n});\n\npm.test(\"BookingIDs are returned\", function () {\n    const jsonData = pm.response.json();\n    pm.expect(jsonData).to.be.an('array')\n        .and.to.have.lengthOf.at.least(1);\n    for (let i = 0; i < jsonData.length; i++) {\n        pm.expect(jsonData[i]).to.have.property('bookingid');\n    }\n});\n\npm.test(\"Booking's ID has a correct format\", function () {\n    const bookings = pm.response.json();\n    pm.expect(bookings[0].bookingid).to.be.a('number')\n    .and.to.be.above(0)\n    .and.to.satisfy(Number.isInteger);\n});"
+                      "pm.test(\"Status code is 200\", function () {\n    pm.response.to.have.status(200);\n});\n\n\nconst jsonData = pm.response.json();\npm.expect(jsonData).to.be.an('array');\nif (jsonData.length > 0) {\n    pm.expect(jsonData[0]).to.have.property('bookingid');\n    pm.expect(jsonData[0].bookingid).to.be.a('number')\n        .and.to.be.above(0)\n        .and.to.satisfy(Number.isInteger);\n}\n\nconst urlParams = new URLSearchParams(pm.request.url.getQueryString());\nconst requestParam = urlParams.get('checkin');\nlet date,\n    bookingDate,\n    requestDate = new Date(requestParam).getTime();\n\npm.sendRequest({\n    url: `${pm.environment.get(\"HerokuApp\")}/booking/${jsonData[0].bookingid}`,\n    method: \"GET\"\n}, function (err, response) {\n    if (err) {\n        console.error(err);\n        return;\n    }\n    const booking = response.json();\n    const date = booking.bookingdates.checkin;\n    bookingDate = new Date(date).getTime();\n\n    pm.test(\"Checkin date matches request parameter\", function () {\n        pm.expect(bookingDate).to.be.above(requestDate);\n    });\n});"
                     ]
                   }
                 }
@@ -1028,7 +1050,7 @@
                   }
                 },
                 "url": {
-                  "raw": "{{HerokuApp}}/booking?checkin=2018-01-01",
+                  "raw": "{{HerokuApp}}/booking?checkin=2020-01-01",
                   "host": [
                     "{{HerokuApp}}"
                   ],
@@ -1038,7 +1060,7 @@
                   "query": [
                     {
                       "key": "checkin",
-                      "value": "2018-01-01"
+                      "value": "2020-01-01"
                     }
                   ]
                 }
@@ -1046,14 +1068,14 @@
               "response": []
             },
             {
-              "name": "Get_bookings_list (+checkout) (pos_5)",
+              "name": "Получение бронирований с фильтром по checkout",
               "event": [
                 {
                   "listen": "test",
                   "script": {
                     "type": "text/javascript",
                     "exec": [
-                      "pm.test(\"Status code is 200\", function () {\n    pm.response.to.have.status(200);\n});\n\npm.test(\"BookingIDs are returned\", function () {\n    const jsonData = pm.response.json();\n    pm.expect(jsonData).to.be.an('array')\n        .and.to.have.lengthOf.at.least(1);\n    for (let i = 0; i < jsonData.length; i++) {\n        pm.expect(jsonData[i]).to.have.property('bookingid');\n    }\n});\n\npm.test(\"Booking's ID has a correct format\", function () {\n    const bookings = pm.response.json();\n    pm.expect(bookings[0].bookingid).to.be.a('number')\n    .and.to.be.above(0)\n    .and.to.satisfy(Number.isInteger);\n});"
+                      "pm.test(\"Status code is 200\", function () {\n    pm.response.to.have.status(200);\n});\n\n\nconst jsonData = pm.response.json();\npm.expect(jsonData).to.be.an('array');\nif (jsonData.length > 0) {\n    pm.expect(jsonData[0]).to.have.property('bookingid');\n    pm.expect(jsonData[0].bookingid).to.be.a('number')\n        .and.to.be.above(0)\n        .and.to.satisfy(Number.isInteger);\n}\n\nconst urlParams = new URLSearchParams(pm.request.url.getQueryString());\nconst requestParam = urlParams.get('checkout');\nlet date,\n    bookingDate,\n    requestDate = new Date(requestParam).getTime();\n\npm.sendRequest({\n    url: `${pm.environment.get(\"HerokuApp\")}/booking/${jsonData[0].bookingid}`,\n    method: \"GET\"\n}, function (err, response) {\n    if (err) {\n        console.error(err);\n        return;\n    }\n    const booking = response.json();\n    const date = booking.bookingdates.checkout;\n    bookingDate = new Date(date).getTime();\n\n    pm.test(\"Checkout date matches request parameter\", function () {\n        pm.expect(bookingDate).to.be.below(requestDate);\n    });\n});"
                     ]
                   }
                 }
@@ -1089,14 +1111,14 @@
               "response": []
             },
             {
-              "name": "Get_bookings_list (+multiparams) (pos_6)",
+              "name": "Получение бронирований с фильтром по lastname+checkin",
               "event": [
                 {
                   "listen": "test",
                   "script": {
                     "type": "text/javascript",
                     "exec": [
-                      "pm.test(\"Status code is 200\", function () {\n    pm.response.to.have.status(200);\n});\n\npm.test(\"BookingIDs are returned\", function () {\n    const jsonData = pm.response.json();\n    pm.expect(jsonData).to.be.an('array')\n        .and.to.have.lengthOf.at.least(1);\n    for (let i = 0; i < jsonData.length; i++) {\n        pm.expect(jsonData[i]).to.have.property('bookingid');\n    }\n});\n\npm.test(\"Booking's ID has a correct format\", function () {\n    const bookings = pm.response.json();\n    pm.expect(bookings[0].bookingid).to.be.a('number')\n    .and.to.be.above(0)\n    .and.to.satisfy(Number.isInteger);\n});"
+                      "pm.test(\"Status code is 200\", function () {\n    pm.response.to.have.status(200);\n});\n\npm.test(\"BookingIDs are returned and have correct format\", function () {\n    const jsonData = pm.response.json();\n    pm.expect(jsonData).to.be.an('array')\n        .and.to.have.lengthOf.at.least(1);\n    for (let i = 0; i < jsonData.length; i++) {\n        pm.expect(jsonData[i]).to.have.property('bookingid');\n    }\n    const bookings = pm.response.json();\n    pm.expect(bookings[0].bookingid).to.be.a('number')\n        .and.to.be.above(0)\n        .and.to.satisfy(Number.isInteger);\n});"
                     ]
                   }
                 }
@@ -1136,14 +1158,14 @@
               "response": []
             },
             {
-              "name": "Get_bookings_list (+multiparams) (pos_7)",
+              "name": "Получение бронирований с фильтром по lastname+firstname+checkin+checkout",
               "event": [
                 {
                   "listen": "test",
                   "script": {
                     "type": "text/javascript",
                     "exec": [
-                      "pm.test(\"Status code is 200\", function () {\n    pm.response.to.have.status(200);\n});\n\npm.test(\"BookingIDs are returned\", function () {\n    const jsonData = pm.response.json();\n    pm.expect(jsonData).to.be.an('array')\n        .and.to.have.lengthOf.at.least(1);\n    for (let i = 0; i < jsonData.length; i++) {\n        pm.expect(jsonData[i]).to.have.property('bookingid');\n    }\n});\n\npm.test(\"Booking's ID has a correct format\", function () {\n    const bookings = pm.response.json();\n    pm.expect(bookings[0].bookingid).to.be.a('number')\n    .and.to.be.above(0)\n    .and.to.satisfy(Number.isInteger);\n});"
+                      "pm.test(\"Status code is 200\", function () {\n    pm.response.to.have.status(200);\n});\n\npm.test(\"BookingIDs are returned\", function () {\n    const jsonData = pm.response.json();\n    pm.expect(jsonData).to.be.an('array')\n        .and.to.have.lengthOf.at.least(1);\n    for (let i = 0; i < jsonData.length; i++) {\n        pm.expect(jsonData[i]).to.have.property('bookingid');\n    }\n});\n\npm.test(\"Booking's ID has a correct format\", function () {\n    const bookings = pm.response.json();\n    pm.expect(bookings[0].bookingid).to.be.a('number')\n        .and.to.be.above(0)\n        .and.to.satisfy(Number.isInteger);\n});"
                     ]
                   }
                 }
@@ -1191,14 +1213,14 @@
               "response": []
             },
             {
-              "name": "Get_bookings_list (nonexistent_param)(pos_8)",
+              "name": "Получение списка бронирований с фильтром по несуществующему параметру",
               "event": [
                 {
                   "listen": "test",
                   "script": {
                     "type": "text/javascript",
                     "exec": [
-                      "pm.test(\"Status code is 200\", function () {\n    pm.response.to.have.status(200);\n});\n\npm.test(\"BookingIDs are returned\", function () {\n    const jsonData = pm.response.json();\n    pm.expect(jsonData).to.be.an('array')\n        .and.to.have.lengthOf.at.least(1);\n    for (let i = 0; i < jsonData.length; i++) {\n        pm.expect(jsonData[i]).to.have.property('bookingid');\n    }\n});\n\npm.test(\"Booking's ID has a correct format\", function () {\n    const bookings = pm.response.json();\n    pm.expect(bookings[0].bookingid).to.be.a('number')\n    .and.to.be.above(0)\n    .and.to.satisfy(Number.isInteger);\n});"
+                      "pm.test(\"Status code is 200\", function () {\n    pm.response.to.have.status(200);\n});\n\npm.test(\"BookingIDs not returned\", function () {\n    const jsonData = pm.response.json();\n    pm.expect(jsonData).to.be.an('array')\n        .and.to.have.lengthOf.at.least(0);\n    for (let i = 0; i < jsonData.length; i++) {\n        pm.expect(jsonData[i]).not.to.have.property('bookingid');\n    }\n});"
                     ]
                   }
                 }
@@ -1234,7 +1256,7 @@
               "response": []
             },
             {
-              "name": "Get_bookings_list (neg_1)",
+              "name": "Неверный формат даты в checkin и/или checkout (12-12-2020)",
               "event": [
                 {
                   "listen": "test",
@@ -1277,7 +1299,7 @@
               "response": []
             },
             {
-              "name": "Get_bookings_list (neg_2)",
+              "name": "Неверный формат даты в checkin и/или checkout (27-27-20)",
               "event": [
                 {
                   "listen": "test",
@@ -1320,7 +1342,7 @@
               "response": []
             },
             {
-              "name": "Get_bookings_list (neg_3)",
+              "name": "Текст вместо даты в checkin и/или checkout",
               "event": [
                 {
                   "listen": "test",
@@ -1363,7 +1385,7 @@
               "response": []
             },
             {
-              "name": "Get_bookings_list (neg_4)",
+              "name": "Получение бронирований с checkout раньше checkin",
               "event": [
                 {
                   "listen": "test",
@@ -1410,7 +1432,7 @@
               "response": []
             },
             {
-              "name": "Get_bookings_list (neg_5)",
+              "name": "Получение бронирований (POST вместо GET)",
               "event": [
                 {
                   "listen": "test",
@@ -1438,7 +1460,7 @@
               "response": []
             },
             {
-              "name": "Get_bookings_list (neg_6)",
+              "name": "Получение бронирований (PUT/PATCH вместо GET)",
               "event": [
                 {
                   "listen": "test",
@@ -1466,7 +1488,7 @@
               "response": []
             },
             {
-              "name": "Get_bookings_list (neg_7)",
+              "name": "Получение бронирований (DELETE вместо GET)",
               "event": [
                 {
                   "listen": "test",
@@ -1494,7 +1516,7 @@
               "response": []
             },
             {
-              "name": "Get_bookings_list (neg_8)",
+              "name": "Получение бронирований (SQL-инъекция внутри string-параметра)",
               "event": [
                 {
                   "listen": "test",
@@ -1537,7 +1559,7 @@
               "response": []
             },
             {
-              "name": "Get_bookings_list (neg_9)",
+              "name": "Получение бронирований (XSS-инъекция внутри string-параметра)",
               "event": [
                 {
                   "listen": "test",
@@ -1580,7 +1602,7 @@
               "response": []
             },
             {
-              "name": "Get_bookings_list (neg_10)",
+              "name": "Получение бронирований (длинное значение string-параметра)",
               "event": [
                 {
                   "listen": "test",
@@ -1623,7 +1645,7 @@
               "response": []
             },
             {
-              "name": "Get_bookings_list (neg_11)",
+              "name": "Получение бронирований (спецсимволы и пробелы в параметрах)",
               "event": [
                 {
                   "listen": "test",
@@ -1666,7 +1688,7 @@
               "response": []
             },
             {
-              "name": "Get_bookings_list (neg_12)",
+              "name": "Получение бронирований (неизвестный query-параметр)",
               "event": [
                 {
                   "listen": "test",
@@ -1709,7 +1731,7 @@
               "response": []
             },
             {
-              "name": "Get_bookings_list (neg_13)",
+              "name": "Получение бронирований (пустые значения параметров)",
               "event": [
                 {
                   "listen": "test",
@@ -1759,90 +1781,1102 @@
         },
         {
           "name": "3.2. booking (POST)",
-          "item": []
-        }
-      ]
-    },
-    {
-      "name": "4. booking/ (POST) Copy",
-      "item": [
-        {
-          "name": "Create_booking",
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "type": "text/javascript",
-                "exec": [
-                  "pm.test(\"Status code is 200\", function () {\r\n    pm.response.to.have.status(200);\r\n});\r\n\r\nconst schema = {\r\n    \"$schema\": \"http://json-schema.org/draft-07/schema#\",\r\n    \"type\": \"object\",\r\n    \"required\": [\"bookingid\", \"booking\"],\r\n    \"properties\": {\r\n        \"bookingid\": {\r\n            \"type\": \"integer\", \"minimum\": 1\r\n            },\r\n        \"booking\": {\r\n            \"type\": \"object\",\r\n            \"required\": [\"firstname\", \"lastname\", \"totalprice\", \"depositpaid\", \"bookingdates\", \"additionalneeds\"],\r\n            \"properties\": {\r\n                \"firstname\": { \"type\": \"string\", \"minLength\": 1 },\r\n                \"lastname\": { \"type\": \"string\", \"minLength\": 1 },\r\n                \"totalprice\": { \"type\": \"integer\", \"minimum\": 0 },\r\n                \"depositpaid\": { \"type\": \"boolean\" },\r\n                \"bookingdates\": {\r\n                    \"type\": \"object\",\r\n                    \"required\": [\"checkin\", \"checkout\"],\r\n                    \"properties\": {\r\n                        \"checkin\": { \"type\": \"string\", \"format\": \"date\" },\r\n                        \"checkout\": { \"type\": \"string\", \"format\": \"date\" }\r\n                        },\r\n                        \"additionalProperties\": false\r\n                    },\r\n                \"additionalneeds\": { \"type\": \"string\" }\r\n            },\r\n            \"additionalProperties\": false\r\n        }\r\n    },\r\n    \"additionalProperties\": false\r\n};\r\n\r\npm.test(\"All booking details are filled and have a correct format\", () => {\r\n  pm.response.to.have.jsonSchema(schema);\r\n});\r\n\r\n// Add created booking ID to environment variable\r\nconst jsonData = pm.response.json()\r\npm.environment.set(\"booking_id_new\", jsonData.bookingid)\r\npm.test(\"Booking ID successfully set to environment variable\", function () {\r\n    pm.expect(pm.environment.get(\"booking_id_new\")).to.not.be.null\r\n})"
-                ]
-              }
-            },
-            {
-              "listen": "prerequest",
-              "script": {
-                "type": "text/javascript",
-                "exec": [
-                  "// checkin\r\nconst moment = require('moment')\r\n// Set today's date and format it\r\nconst today = moment()\r\nconst checkin = today.add(60, 'days').format(\"YYYY-MM-DD\") \r\nconsole.log(\"Check-in Date:\", checkin)\r\npm.environment.set(\"checkin\", checkin)\r\n\r\n// checkout\r\nconst checkout = moment(checkin).add(5, 'days').format(\"YYYY-MM-DD\")\r\npm.environment.set(\"checkout\", checkout)\r\nconsole.log(\"Check-out Date:\", checkout)"
-                ]
-              }
-            }
-          ],
-          "protocolProfileBehavior": {
-            "disabledSystemHeaders": {
-              "content-type": true
-            }
-          },
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\r\n\t\"firstname\" : \"{{$randomFirstName}}\",\r\n\t\"lastname\" : \"{{$randomLastName}}\",\r\n\t\"totalprice\" : {{$randomInt}},\r\n\t\"depositpaid\" : {{$randomBoolean}},\r\n\t\"bookingdates\" : {\r\n    \t\"checkin\" : \"{{checkin}}\",\r\n    \t\"checkout\" : \"{{checkout}}\"\r\n\t},\r\n\t\"additionalneeds\" : \"{{$randomProduct}}\"\r\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "{{HerokuApp}}/booking",
-              "host": [
-                "{{HerokuApp}}"
-              ],
-              "path": [
-                "booking"
-              ]
-            }
-          },
-          "response": []
-        }
-      ]
-    },
-    {
-      "name": "5. booking/:id",
-      "item": [
-        {
-          "name": "5.1. booking/:id (GET)",
           "item": [
             {
-              "name": "Get_specific_booking (pos_1)",
+              "name": "Создание бронирования со всеми полями",
+              "event": [
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "exec": [
+                      ""
+                    ],
+                    "type": "text/javascript",
+                    "packages": {}
+                  }
+                },
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () {\r",
+                      "    pm.response.to.have.status(200);\r",
+                      "});"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {}
+                  }
+                }
+              ],
+              "protocolProfileBehavior": {
+                "disabledSystemHeaders": {
+                  "content-type": true
+                }
+              },
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n\t\"firstname\" : \"Oceane\",\r\n\t\"lastname\" : \"Kilback\",\r\n    \"totalprice\" : 420,\r\n\t\"depositpaid\" : true,\r\n\t\"bookingdates\" : {\r\n    \t\"checkin\" : \"2025-01-20\",\r\n    \t\"checkout\" : \"2025-01-28\"\r\n\t},\r\n\t\"additionalneeds\" : \"Computer\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{HerokuApp}}/booking",
+                  "host": [
+                    "{{HerokuApp}}"
+                  ],
+                  "path": [
+                    "booking"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Проверка структуры ответа (schema validation)",
               "event": [
                 {
                   "listen": "test",
                   "script": {
                     "type": "text/javascript",
                     "exec": [
-                      "pm.test(\"Status code is 200\", function () {\r\n    pm.response.to.have.status(200);\r\n});\r\n\r\npm.test(\"Response body is JSON\", function () {\r\n    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\r\n});\r\n\r\n\r\nconst schema = {\r\n    \"$schema\": \"http://json-schema.org/draft-07/schema#\",\r\n    \"type\": \"object\",\r\n    \"required\": [\"firstname\", \"lastname\", \"totalprice\", \"depositpaid\", \"bookingdates\", \"additionalneeds\"],\r\n    \"properties\": {\r\n        \"firstname\": { \"type\": \"string\", \"minLength\": 1 },\r\n        \"lastname\": { \"type\": \"string\", \"minLength\": 1 },\r\n        \"totalprice\": { \"type\": \"integer\", \"minimum\": 0 },\r\n        \"depositpaid\": { \"type\": \"boolean\" },\r\n        \"bookingdates\": {\r\n            \"type\": \"object\",\r\n            \"required\": [\"checkin\", \"checkout\"],\r\n            \"properties\": {\r\n                \"checkin\": { \"type\": \"string\", \"format\": \"date\" },\r\n                \"checkout\": { \"type\": \"string\", \"format\": \"date\" }\r\n                },\r\n                \"additionalProperties\": false\r\n            },\r\n        \"additionalneeds\": { \"type\": \"string\" }\r\n        },\r\n    \"additionalProperties\": false\r\n};\r\n\r\npm.test(\"All booking details are filled and have a correct format\", () => {\r\n    pm.response.to.have.jsonSchema(schema);\r\n});"
+                      "const schema = {\r\n    \"$schema\": \"http://json-schema.org/draft-07/schema#\",\r\n    \"type\": \"object\",\r\n    \"required\": [\"bookingid\", \"booking\"],\r\n    \"properties\": {\r\n        \"bookingid\": {\r\n            \"type\": \"integer\", \"minimum\": 1\r\n        },\r\n        \"booking\": {\r\n            \"type\": \"object\",\r\n            \"required\": [\"firstname\", \"lastname\", \"totalprice\", \"depositpaid\", \"bookingdates\", \"additionalneeds\"],\r\n            \"properties\": {\r\n                \"firstname\": { \"type\": \"string\", \"minLength\": 1 },\r\n                \"lastname\": { \"type\": \"string\", \"minLength\": 1 },\r\n                \"totalprice\": { \"type\": \"integer\", \"minimum\": 0 },\r\n                \"depositpaid\": { \"type\": \"boolean\" },\r\n                \"bookingdates\": {\r\n                    \"type\": \"object\",\r\n                    \"required\": [\"checkin\", \"checkout\"],\r\n                    \"properties\": {\r\n                        \"checkin\": { \"type\": \"string\", \"format\": \"date\" },\r\n                        \"checkout\": { \"type\": \"string\", \"format\": \"date\" }\r\n                    },\r\n                    \"additionalProperties\": false\r\n                },\r\n                \"additionalneeds\": { \"type\": \"string\" }\r\n            },\r\n            \"additionalProperties\": false\r\n        }\r\n    },\r\n    \"additionalProperties\": false\r\n};\r\n\r\npm.test(\"All booking details are filled and have a correct format\", () => {\r\n    pm.response.to.have.jsonSchema(schema);\r\n});"
+                    ]
+                  }
+                }
+              ],
+              "protocolProfileBehavior": {
+                "disabledSystemHeaders": {
+                  "content-type": true
+                }
+              },
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n\t\"firstname\" : \"Oceane\",\r\n\t\"lastname\" : \"Kilback\",\r\n    \"totalprice\" : 420,\r\n\t\"depositpaid\" : true,\r\n\t\"bookingdates\" : {\r\n    \t\"checkin\" : \"2025-01-20\",\r\n    \t\"checkout\" : \"2025-01-28\"\r\n\t},\r\n\t\"additionalneeds\" : \"Computer\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{HerokuApp}}/booking",
+                  "host": [
+                    "{{HerokuApp}}"
+                  ],
+                  "path": [
+                    "booking"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Проверка доступности созданного бронирования",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "// get id of created booking\nconst jsonData = pm.response.json();\npm.expect(jsonData.bookingid).to.not.be.null;\npm.environment.set(\"booking_id_new\", jsonData.bookingid);\nconsole.log(\"Created booking id: \" + pm.environment.get(\"booking_id_new\"));\n\n// check if created booking is available\nconst newBookingUrl = pm.environment.get('HerokuApp') + \"/booking/\" + pm.environment.get('booking_id_new');\npm.sendRequest({\n    url: newBookingUrl,\n    method: 'GET',\n    header: {\n        'Content-Type': 'application/json'\n    }\n}, function (error, response) {\n    if (error) {\n        console.log(\"Failed to get booking\", error);\n    } else {\n        pm.test(\"Check if created booking is available\", function () {\n            pm.expect(response.code).to.eql(200);\n        });\n        const responseData = response.json();\n        pm.test(\"Check if created booking contains correct data\", function () {\n            pm.expect(responseData.firstname).to.eql(\"Oceane\");\n            pm.expect(responseData.lastname).to.eql(\"Kilback\");\n            pm.expect(responseData.totalprice).to.eql(420);\n            pm.expect(responseData.depositpaid).to.eql(true);\n            pm.expect(responseData.bookingdates.checkin).to.eql(\"2025-01-20\");\n            pm.expect(responseData.bookingdates.checkout).to.eql(\"2025-01-28\");\n            pm.expect(responseData.additionalneeds).to.eql(\"Computer\");\n        });\n    }\n});"
+                    ]
+                  }
+                }
+              ],
+              "protocolProfileBehavior": {
+                "disabledSystemHeaders": {
+                  "content-type": true
+                }
+              },
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n\t\"firstname\" : \"Oceane\",\r\n\t\"lastname\" : \"Kilback\",\r\n    \"totalprice\" : 420,\r\n\t\"depositpaid\" : true,\r\n\t\"bookingdates\" : {\r\n    \t\"checkin\" : \"2025-01-20\",\r\n    \t\"checkout\" : \"2025-01-28\"\r\n\t},\r\n\t\"additionalneeds\" : \"Computer\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{HerokuApp}}/booking",
+                  "host": [
+                    "{{HerokuApp}}"
+                  ],
+                  "path": [
+                    "booking"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Создание бронирования с totalprice = 0",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "const sent = JSON.parse(pm.request.body.raw);\r",
+                      "pm.test(\"Total price stored correctly\", function () {\r",
+                      "    pm.expect(pm.response.json().booking.totalprice).to.eql(sent.totalprice);\r",
+                      "});"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {}
+                  }
+                }
+              ],
+              "protocolProfileBehavior": {
+                "disabledSystemHeaders": {
+                  "content-type": true
+                }
+              },
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n\t\"firstname\" : \"Oceane\",\r\n\t\"lastname\" : \"Kilback\",\r\n    \"totalprice\" : 0,\r\n\t\"depositpaid\" : true,\r\n\t\"bookingdates\" : {\r\n    \t\"checkin\" : \"2025-01-20\",\r\n    \t\"checkout\" : \"2025-01-28\"\r\n\t},\r\n\t\"additionalneeds\" : \"Computer\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{HerokuApp}}/booking",
+                  "host": [
+                    "{{HerokuApp}}"
+                  ],
+                  "path": [
+                    "booking"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Создание бронирования со специальными символами в строковых полях",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "const sent = JSON.parse(pm.request.body.raw);\r",
+                      "pm.test(\"Special characters in names are stored correctly\", function () {\r",
+                      "    pm.expect(pm.response.json().booking.firstname).to.eql(sent.firstname);\r",
+                      "    pm.expect(pm.response.json().booking.lastname).to.eql(sent.lastname);\r",
+                      "});"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {}
+                  }
+                }
+              ],
+              "protocolProfileBehavior": {
+                "disabledSystemHeaders": {
+                  "content-type": true
+                }
+              },
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n\t\"firstname\" : \"Mary-Ann\",\r\n\t\"lastname\" : \"O`Riley\",\r\n    \"totalprice\" : 0,\r\n\t\"depositpaid\" : true,\r\n\t\"bookingdates\" : {\r\n    \t\"checkin\" : \"2025-01-20\",\r\n    \t\"checkout\" : \"2025-01-28\"\r\n\t},\r\n\t\"additionalneeds\" : \"Computer\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{HerokuApp}}/booking",
+                  "host": [
+                    "{{HerokuApp}}"
+                  ],
+                  "path": [
+                    "booking"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Многократное создание с одинаковым телом запроса",
+              "event": [
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "const newBooking = {\n    url: 'https://restful-booker.herokuapp.com/booking',\n    method: 'POST',\n    header: {\n        'Content-Type': 'application/json'\n    },\n    body: {\n        mode: 'raw',\n        raw: JSON.stringify({\n            \"firstname\": \"Oceane\",\n            \"lastname\": \"Kilback\",\n            \"totalprice\": 420,\n            \"depositpaid\": true,\n            \"bookingdates\": {\n                \"checkin\": \"2025-01-20\",\n                \"checkout\": \"2025-01-28\"\n            },\n            \"additionalneeds\": \"Computer\"\n        })\n    }\n}\n\npm.sendRequest(newBooking, (err, res) => {\n    if (err) {\n        console.error(\"Request failed:\", err);\n        return;\n    }\n    if (res) {\n        let tempResp = res.json();\n        booking_id_new = tempResp.bookingid;\n        console.log(\"New Booking ID:\", booking_id_new);\n        pm.environment.set(\"booking_id_new\", booking_id_new);\n        pm.environment.set(\"tempFirstname\", tempResp.booking.firstname);\n        pm.environment.set(\"tempLastname\", tempResp.booking.lastname);\n        pm.environment.set(\"tempTotalprice\", tempResp.booking.totalprice);\n        pm.environment.set(\"tempDepositpaid\", tempResp.booking.depositpaid);\n        pm.environment.set(\"tempCheckin\", tempResp.booking.bookingdates.checkin);\n        pm.environment.set(\"tempCheckout\", tempResp.booking.bookingdates.checkout);\n        pm.environment.set(\"tempAdditionalneeds\", tempResp.booking.additionalneeds);\n    } else {\n        console.error(\"Response is empty or invalid\");\n    }\n});"
+                    ]
+                  }
+                },
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Created bookings \" + pm.variables.get('booking_id_new') + \" and \" + pm.response.json().bookingid + \" has equal booking details but different IDs\", function () {\r\n    pm.expect(pm.response.json().booking.firstname).to.eql(pm.environment.get(\"tempFirstname\"));\r\n    pm.expect(pm.response.json().booking.lastname).to.eql(pm.environment.get(\"tempLastname\"));\r\n    pm.expect(pm.response.json().booking.totalprice).to.eql(parseInt(pm.environment.get(\"tempTotalprice\")));\r\n    pm.expect(pm.response.json().booking.depositpaid).to.eql(pm.environment.get(\"tempDepositpaid\"));\r\n    pm.expect(pm.response.json().booking.bookingdates.checkin).to.eql(pm.environment.get(\"tempCheckin\"));\r\n    pm.expect(pm.response.json().booking.bookingdates.checkout).to.eql(pm.environment.get(\"tempCheckout\"));\r\n    pm.expect(pm.response.json().booking.additionalneeds).to.eql(pm.environment.get(\"tempAdditionalneeds\"));\r\n});\r\n"
+                    ]
+                  }
+                }
+              ],
+              "protocolProfileBehavior": {
+                "disabledSystemHeaders": {
+                  "content-type": true
+                }
+              },
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n\t\"firstname\" : \"Oceane\",\r\n\t\"lastname\" : \"Kilback\",\r\n    \"totalprice\" : 420,\r\n\t\"depositpaid\" : true,\r\n\t\"bookingdates\" : {\r\n    \t\"checkin\" : \"2025-01-20\",\r\n    \t\"checkout\" : \"2025-01-28\"\r\n\t},\r\n\t\"additionalneeds\" : \"Computer\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{HerokuApp}}/booking",
+                  "host": [
+                    "{{HerokuApp}}"
+                  ],
+                  "path": [
+                    "booking"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Создание бронирования (Пустое тело запроса)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 400\", function () {\n    pm.response.to.have.status(400);\n});\n\npm.test(\"New booking is not created\", function () {\n    pm.expect(pm.response.headers.get(\"Content-Type\")).to.not.include(\"application/json\");\n});"
+                    ]
+                  }
+                }
+              ],
+              "protocolProfileBehavior": {
+                "disabledSystemHeaders": {
+                  "content-type": true
+                }
+              },
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{HerokuApp}}/booking",
+                  "host": [
+                    "{{HerokuApp}}"
+                  ],
+                  "path": [
+                    "booking"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Создание бронирования (Отсутствует обязательное поле string)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 400\", function () {\r\n    pm.response.to.have.status(400);\r\n});\r\n\r\npm.test(\"New booking is not created\", function () {\r\n    pm.expect(pm.response.headers.get(\"Content-Type\")).to.not.include(\"application/json\");\r\n});"
+                    ]
+                  }
+                }
+              ],
+              "protocolProfileBehavior": {
+                "disabledSystemHeaders": {
+                  "content-type": true
+                }
+              },
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n\t\"firstname\" : \"Oceane\",\r\n    \"totalprice\" : 420,\r\n\t\"depositpaid\" : true,\r\n\t\"bookingdates\" : {\r\n    \t\"checkin\" : \"2025-01-20\",\r\n    \t\"checkout\" : \"2025-01-28\"\r\n\t},\r\n\t\"additionalneeds\" : \"Computer\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{HerokuApp}}/booking",
+                  "host": [
+                    "{{HerokuApp}}"
+                  ],
+                  "path": [
+                    "booking"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Создание бронирования (Отсутствует обязательное поле date)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 400\", function () {\r\n    pm.response.to.have.status(400);\r\n});\r\n\r\npm.test(\"New booking is not created\", function () {\r\n    pm.expect(pm.response.headers.get(\"Content-Type\")).to.not.include(\"application/json\");\r\n});"
+                    ]
+                  }
+                }
+              ],
+              "protocolProfileBehavior": {
+                "disabledSystemHeaders": {
+                  "content-type": true
+                }
+              },
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n\t\"firstname\" : \"Oceane\",\r\n\t\"lastname\" : \"Kilback\",\r\n    \"totalprice\" : 420,\r\n\t\"depositpaid\" : true,\r\n\t\"bookingdates\" : {\r\n    \t\"checkin\" : \"2025-01-20\"\r\n\t},\r\n\t\"additionalneeds\" : \"Computer\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{HerokuApp}}/booking",
+                  "host": [
+                    "{{HerokuApp}}"
+                  ],
+                  "path": [
+                    "booking"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Создание бронирования (totalprice - отрицательное значение)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 400\", function () {\r\n    pm.response.to.have.status(400);\r\n});\r\n\r\npm.test(\"New booking is not created\", function () {\r\n    pm.expect(pm.response.headers.get(\"Content-Type\")).to.not.include(\"application/json\");\r\n});"
+                    ]
+                  }
+                }
+              ],
+              "protocolProfileBehavior": {
+                "disabledSystemHeaders": {
+                  "content-type": true
+                }
+              },
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n\t\"firstname\" : \"Oceane\",\r\n\t\"lastname\" : \"Kilback\",\r\n    \"totalprice\" : -20,\r\n\t\"depositpaid\" : true,\r\n\t\"bookingdates\" : {\r\n    \t\"checkin\" : \"2025-01-20\",\r\n    \t\"checkout\" : \"2025-01-28\"\r\n\t},\r\n\t\"additionalneeds\" : \"Computer\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{HerokuApp}}/booking",
+                  "host": [
+                    "{{HerokuApp}}"
+                  ],
+                  "path": [
+                    "booking"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Создание бронирования (string вместо integer)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 400\", function () {\r\n    pm.response.to.have.status(400);\r\n});\r\n\r\npm.test(\"New booking is not created\", function () {\r\n    pm.expect(pm.response.headers.get(\"Content-Type\")).to.not.include(\"application/json\");\r\n});"
+                    ]
+                  }
+                }
+              ],
+              "protocolProfileBehavior": {
+                "disabledSystemHeaders": {
+                  "content-type": true
+                }
+              },
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n\t\"firstname\" : \"Oceane\",\r\n\t\"lastname\" : \"Kilback\",\r\n    \"totalprice\" : \"text\",\r\n\t\"depositpaid\" : true,\r\n\t\"bookingdates\" : {\r\n    \t\"checkin\" : \"2025-01-20\",\r\n    \t\"checkout\" : \"2025-01-28\"\r\n\t},\r\n\t\"additionalneeds\" : \"Computer\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{HerokuApp}}/booking",
+                  "host": [
+                    "{{HerokuApp}}"
+                  ],
+                  "path": [
+                    "booking"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Создание бронирования (string вместо boolean)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 400\", function () {\r\n    pm.response.to.have.status(400);\r\n});\r\n\r\npm.test(\"New booking is not created\", function () {\r\n    pm.expect(pm.response.headers.get(\"Content-Type\")).to.not.include(\"application/json\");\r\n});"
+                    ]
+                  }
+                }
+              ],
+              "protocolProfileBehavior": {
+                "disabledSystemHeaders": {
+                  "content-type": true
+                }
+              },
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n\t\"firstname\" : \"Oceane\",\r\n\t\"lastname\" : \"Kilback\",\r\n    \"totalprice\" : 420,\r\n\t\"depositpaid\" : \"no\",\r\n\t\"bookingdates\" : {\r\n    \t\"checkin\" : \"2025-01-20\",\r\n    \t\"checkout\" : \"2025-01-28\"\r\n\t},\r\n\t\"additionalneeds\" : \"Computer\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{HerokuApp}}/booking",
+                  "host": [
+                    "{{HerokuApp}}"
+                  ],
+                  "path": [
+                    "booking"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Создание бронирования (Неверный формат даты)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 400\", function () {\r\n    pm.response.to.have.status(400);\r\n});\r\n\r\npm.test(\"New booking is not created\", function () {\r\n    pm.expect(pm.response.headers.get(\"Content-Type\")).to.not.include(\"application/json\");\r\n});"
+                    ]
+                  }
+                }
+              ],
+              "protocolProfileBehavior": {
+                "disabledSystemHeaders": {
+                  "content-type": true
+                }
+              },
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n\t\"firstname\" : \"Oceane\",\r\n\t\"lastname\" : \"Kilback\",\r\n    \"totalprice\" : 420,\r\n\t\"depositpaid\" : true,\r\n\t\"bookingdates\" : {\r\n    \t\"checkin\" : \"01/12/2025\",\r\n    \t\"checkout\" : \"26-01-28\"\r\n\t},\r\n\t\"additionalneeds\" : \"Computer\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{HerokuApp}}/booking",
+                  "host": [
+                    "{{HerokuApp}}"
+                  ],
+                  "path": [
+                    "booking"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Создание бронирования (checkout раньше checkin)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 400\", function () {\r\n    pm.response.to.have.status(400);\r\n});\r\n\r\npm.test(\"New booking is not created\", function () {\r\n    pm.expect(pm.response.headers.get(\"Content-Type\")).to.not.include(\"application/json\");\r\n});"
+                    ]
+                  }
+                }
+              ],
+              "protocolProfileBehavior": {
+                "disabledSystemHeaders": {
+                  "content-type": true
+                }
+              },
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n\t\"firstname\" : \"Oceane\",\r\n\t\"lastname\" : \"Kilback\",\r\n    \"totalprice\" : 420,\r\n\t\"depositpaid\" : true,\r\n\t\"bookingdates\" : {\r\n    \t\"checkin\" : \"2025-01-28\",\r\n    \t\"checkout\" : \"2025-01-20\"\r\n\t},\r\n\t\"additionalneeds\" : \"Computer\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{HerokuApp}}/booking",
+                  "host": [
+                    "{{HerokuApp}}"
+                  ],
+                  "path": [
+                    "booking"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Создание бронирования (Невалидный JSON в теле)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 400\", function () {\r\n    pm.response.to.have.status(400);\r\n});\r\n\r\npm.test(\"New booking is not created\", function () {\r\n    pm.expect(pm.response.headers.get(\"Content-Type\")).to.not.include(\"application/json\");\r\n});"
+                    ]
+                  }
+                }
+              ],
+              "protocolProfileBehavior": {
+                "disabledSystemHeaders": {
+                  "content-type": true
+                }
+              },
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n\tfirstname : \"Oceane\",\r\n\tlastname : \"Kilback\",\r\n    \"totalprice\" : 420,\r\n\t\"depositpaid\" : true,\r\n\t\"bookingdates\" : {\r\n    \t\"checkin\" : \"2025-01-20\",\r\n    \t\"checkout\" : \"2025-01-28\"\r\n\t},\r\n\t\"additionalneeds\" : \"Computer\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{HerokuApp}}/booking",
+                  "host": [
+                    "{{HerokuApp}}"
+                  ],
+                  "path": [
+                    "booking"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Создание бронирования (Неверный Content-Type в Header)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 400 or 415\", function () {\r\n    pm.expect(pm.response.code).to.be.oneOf([400, 415]);\r\n});\r\n\r\npm.test(\"New booking is not created\", function () {\r\n    pm.expect(pm.response.headers.get(\"Content-Type\")).to.not.include(\"application/json\");\r\n});"
+                    ]
+                  }
+                }
+              ],
+              "protocolProfileBehavior": {
+                "disabledSystemHeaders": {
+                  "content-type": true
+                }
+              },
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "text/plain"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n\t\"firstname\" : \"Oceane\",\r\n\t\"lastname\" : \"Kilback\",\r\n    \"totalprice\" : 420,\r\n\t\"depositpaid\" : true,\r\n\t\"bookingdates\" : {\r\n    \t\"checkin\" : \"2025-01-20\",\r\n    \t\"checkout\" : \"2025-01-28\"\r\n\t},\r\n\t\"additionalneeds\" : \"Computer\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{HerokuApp}}/booking",
+                  "host": [
+                    "{{HerokuApp}}"
+                  ],
+                  "path": [
+                    "booking"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Создание бронирования (Отсутствует Content-Type в Header)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 400 or 415\", function () {\r\n    pm.expect(pm.response.code).to.be.oneOf([400, 415]);\r\n});\r\n\r\npm.test(\"New booking is not created\", function () {\r\n    pm.expect(pm.response.headers.get(\"Content-Type\")).to.not.include(\"application/json\");\r\n});"
+                    ]
+                  }
+                }
+              ],
+              "protocolProfileBehavior": {
+                "disabledSystemHeaders": {
+                  "content-type": true
+                }
+              },
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n\t\"firstname\" : \"Oceane\",\r\n\t\"lastname\" : \"Kilback\",\r\n    \"totalprice\" : 420,\r\n\t\"depositpaid\" : true,\r\n\t\"bookingdates\" : {\r\n    \t\"checkin\" : \"2025-01-20\",\r\n    \t\"checkout\" : \"2025-01-28\"\r\n\t},\r\n\t\"additionalneeds\" : \"Computer\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{HerokuApp}}/booking",
+                  "host": [
+                    "{{HerokuApp}}"
+                  ],
+                  "path": [
+                    "booking"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Создание бронирования (SQL-инъекция в string-параметре)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () {\r",
+                      "    pm.response.to.have.status(200);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"SQL-injected parameter stored as is\", function () {\r",
+                      "    const requestBody = JSON.parse(pm.request.body.raw);\r",
+                      "    pm.expect(pm.response.json().booking.firstname).to.eql(requestBody.firstname);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Check if the booking table is still present\", function () {\r",
+                      "    const bookingTable = {\r",
+                      "        url: 'https://restful-booker.herokuapp.com/booking',\r",
+                      "        method: 'GET',\r",
+                      "        header: {\r",
+                      "            'Content-Type': 'application/json'\r",
+                      "        }\r",
+                      "    }\r",
+                      "    pm.sendRequest(bookingTable, (err, res) => {\r",
+                      "        if (err) {\r",
+                      "            console.error(\"Request failed:\", err);\r",
+                      "            return;\r",
+                      "        }\r",
+                      "        if (res) {\r",
+                      "            pm.response.to.have.status(200);\r",
+                      "        } else {\r",
+                      "            console.error(\"Response is empty or invalid\");\r",
+                      "        }\r",
+                      "    });\r",
+                      "});"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {}
+                  }
+                }
+              ],
+              "protocolProfileBehavior": {
+                "disabledSystemHeaders": {
+                  "content-type": true
+                }
+              },
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n\t\"firstname\" : \"Jim'; DROP TABLE bookings;--\",\r\n\t\"lastname\" : \"Kilback\",\r\n    \"totalprice\" : 420,\r\n\t\"depositpaid\" : true,\r\n\t\"bookingdates\" : {\r\n    \t\"checkin\" : \"2025-01-20\",\r\n    \t\"checkout\" : \"2025-01-28\"\r\n\t},\r\n\t\"additionalneeds\" : \"Computer\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{HerokuApp}}/booking",
+                  "host": [
+                    "{{HerokuApp}}"
+                  ],
+                  "path": [
+                    "booking"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Создание бронирования (XSS-инъекция в string-параметре)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () {\r\n    pm.response.to.have.status(200);\r\n});\r\n\r\npm.test(\"XSS-injected parameter stored as is\", function () {\r\n    const requestBody = JSON.parse(pm.request.body.raw);\r\n    pm.expect(pm.response.json().booking.firstname).to.eql(requestBody.firstname);\r\n});"
+                    ]
+                  }
+                }
+              ],
+              "protocolProfileBehavior": {
+                "disabledSystemHeaders": {
+                  "content-type": true
+                }
+              },
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n\t\"firstname\" : \"<script>alert('xss')</script>\",\r\n\t\"lastname\" : \"Kilback\",\r\n    \"totalprice\" : 420,\r\n\t\"depositpaid\" : true,\r\n\t\"bookingdates\" : {\r\n    \t\"checkin\" : \"2025-01-20\",\r\n    \t\"checkout\" : \"2025-01-28\"\r\n\t},\r\n\t\"additionalneeds\" : \"Computer\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{HerokuApp}}/booking",
+                  "host": [
+                    "{{HerokuApp}}"
+                  ],
+                  "path": [
+                    "booking"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Создание бронирования (Дополнительные поля в теле запроса)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () {\r\n    pm.response.to.have.status(200);\r\n});\r\n\r\nconst schema = {\r\n    \"$schema\": \"http://json-schema.org/draft-07/schema#\",\r\n    \"type\": \"object\",\r\n    \"required\": [\r\n        \"bookingid\",\r\n        \"booking\"\r\n    ],\r\n    \"properties\": {\r\n        \"bookingid\": {\r\n            \"type\": \"integer\"\r\n        },\r\n        \"booking\": {\r\n            \"type\": \"object\",\r\n            \"required\": [\"firstname\", \"lastname\", \"totalprice\", \"depositpaid\", \"bookingdates\", \"additionalneeds\"],\r\n            \"properties\": {\r\n                \"firstname\": { \"type\": \"string\", \"minLength\": 1 },\r\n                \"lastname\": { \"type\": \"string\", \"minLength\": 1 },\r\n                \"totalprice\": { \"type\": \"integer\", \"minimum\": 0 },\r\n                \"depositpaid\": { \"type\": \"boolean\" },\r\n                \"bookingdates\": {\r\n                    \"type\": \"object\",\r\n                    \"required\": [\"checkin\", \"checkout\"],\r\n                    \"properties\": {\r\n                        \"checkin\": { \"type\": \"string\", \"format\": \"date\" },\r\n                        \"checkout\": { \"type\": \"string\", \"format\": \"date\" }\r\n                    },\r\n                    \"additionalProperties\": false\r\n                },\r\n                \"additionalneeds\": { \"type\": \"string\" }\r\n            },\r\n            \"additionalProperties\": false\r\n        }\r\n    },\r\n    \"additionalProperties\": false\r\n};\r\n\r\npm.test(\"All booking details are filled; extra-fields are ignored\", () => {\r\n    pm.response.to.have.jsonSchema(schema);\r\n});"
+                    ]
+                  }
+                }
+              ],
+              "protocolProfileBehavior": {
+                "disabledSystemHeaders": {
+                  "content-type": true
+                }
+              },
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n\t\"firstname\" : \"Oceane\",\r\n\t\"lastname\" : \"Kilback\",\r\n    \"totalprice\" : 420,\r\n\t\"depositpaid\" : true,\r\n\t\"bookingdates\" : {\r\n    \t\"checkin\" : \"2025-01-20\",\r\n    \t\"checkout\" : \"2025-01-28\"\r\n\t},\r\n\t\"additionalneeds\" : \"Computer\",\r\n    \"extra_field\": \"test\",\r\n    \"role\": \"admin\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{HerokuApp}}/booking",
+                  "host": [
+                    "{{HerokuApp}}"
+                  ],
+                  "path": [
+                    "booking"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "4. booking/:id",
+      "item": [
+        {
+          "name": "4.1. booking/:id (GET)",
+          "item": [
+            {
+              "name": "Получение существующего бронирования",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () {\r\n    pm.response.to.have.status(200);\r\n});\r\n\r\npm.test(\"Response body is JSON\", function () {\r\n    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\r\n});\r\n\r\n\r\npm.test(\"All booking details are filled and have a correct format\", () => {\r\n    const schema = JSON.parse(pm.collectionVariables.get(\"JSON_schema\"));\r\n    pm.response.to.have.jsonSchema(schema);\r\n});"
                     ]
                   }
                 }
@@ -1861,20 +2895,20 @@
                   }
                 ],
                 "url": {
-                  "raw": "{{HerokuApp}}/booking/8",
+                  "raw": "{{HerokuApp}}/booking/15",
                   "host": [
                     "{{HerokuApp}}"
                   ],
                   "path": [
                     "booking",
-                    "8"
+                    "15"
                   ]
                 }
               },
               "response": []
             },
             {
-              "name": "Get_specific_booking (neg_1)",
+              "name": "Запрос бронирования (несуществующий ID)",
               "event": [
                 {
                   "listen": "test",
@@ -1922,7 +2956,7 @@
               "response": []
             },
             {
-              "name": "Get_specific_booking (neg_2)",
+              "name": "Запрос бронирования (ID=0)",
               "event": [
                 {
                   "listen": "test",
@@ -1961,7 +2995,7 @@
               "response": []
             },
             {
-              "name": "Get_specific_booking (neg_3)",
+              "name": "Запрос бронирования (отрицательный ID)",
               "event": [
                 {
                   "listen": "test",
@@ -2000,7 +3034,7 @@
               "response": []
             },
             {
-              "name": "Get_specific_booking (neg_4)",
+              "name": "Запрос бронирования (буквенный ID)",
               "event": [
                 {
                   "listen": "test",
@@ -2026,20 +3060,20 @@
                   }
                 ],
                 "url": {
-                  "raw": "{{HerokuApp}}/booking/a",
+                  "raw": "{{HerokuApp}}/booking/{{txtBookingid}}",
                   "host": [
                     "{{HerokuApp}}"
                   ],
                   "path": [
                     "booking",
-                    "a"
+                    "{{txtBookingid}}"
                   ]
                 }
               },
               "response": []
             },
             {
-              "name": "Get_specific_booking (neg_5)",
+              "name": "Запрос бронирования (некорректный Accept-заголовок)",
               "event": [
                 {
                   "listen": "test",
@@ -2078,7 +3112,7 @@
               "response": []
             },
             {
-              "name": "Get_specific_booking (neg_6)",
+              "name": "Запрос бронирования (очень большой ID)",
               "event": [
                 {
                   "listen": "test",
@@ -2104,13 +3138,13 @@
                   }
                 ],
                 "url": {
-                  "raw": "{{HerokuApp}}/booking/99999999999999999999",
+                  "raw": "{{HerokuApp}}/booking/{{xlBookingid}}",
                   "host": [
                     "{{HerokuApp}}"
                   ],
                   "path": [
                     "booking",
-                    "99999999999999999999"
+                    "{{xlBookingid}}"
                   ]
                 }
               },
@@ -2119,17 +3153,17 @@
           ]
         },
         {
-          "name": "5.2. booking/:id (PUT)",
+          "name": "4.2. booking/:id (PUT)",
           "item": [
             {
-              "name": "Update_booking (Token-auth) (pos_1)",
+              "name": "Полное обновление существующего бронирования (Token-auth)",
               "event": [
                 {
                   "listen": "test",
                   "script": {
                     "type": "text/javascript",
                     "exec": [
-                      "pm.test(\"Status code is 200\", function () {\r\n    pm.response.to.have.status(200);\r\n});\r\n\r\npm.test(\"All booking details are updated\", function () {\r\n    const newdetails = JSON.parse(pm.request.body.raw);\r\n    const response = pm.response.json();\r\n    const dates = response.bookingdates;\r\n    pm.expect(response.firstname).to.eql(newdetails.firstname);\r\n    pm.expect(response.lastname).to.eql(newdetails.lastname);\r\n    pm.expect(response.totalprice).to.eql(newdetails.totalprice);\r\n    pm.expect(response.depositpaid).to.eql(newdetails.depositpaid);\r\n    pm.expect(dates.checkin).to.eql(newdetails.bookingdates.checkin);\r\n    pm.expect(dates.checkout).to.eql(newdetails.bookingdates.checkout);\r\n    pm.expect(response.additionalneeds).to.eql(newdetails.additionalneeds);\r\n});\r\n\r\npm.test(\"All booking details are filled and have a correct format\", () => {\r\n    const schema = {\r\n    \"$schema\": \"http://json-schema.org/draft-07/schema#\",\r\n    \"type\": \"object\",\r\n    \"required\": [\"firstname\", \"lastname\", \"totalprice\", \"depositpaid\", \"bookingdates\", \"additionalneeds\"],\r\n    \"properties\": {\r\n        \"firstname\": { \"type\": \"string\", \"minLength\": 1 },\r\n        \"lastname\": { \"type\": \"string\", \"minLength\": 1 },\r\n        \"totalprice\": { \"type\": \"integer\", \"minimum\": 0 },\r\n        \"depositpaid\": { \"type\": \"boolean\" },\r\n        \"bookingdates\": {\r\n            \"type\": \"object\",\r\n            \"required\": [\"checkin\", \"checkout\"],\r\n            \"properties\": {\r\n                \"checkin\": { \"type\": \"string\", \"format\": \"date\" },\r\n                \"checkout\": { \"type\": \"string\", \"format\": \"date\" }\r\n                },\r\n                \"additionalProperties\": false\r\n            },\r\n        \"additionalneeds\": { \"type\": \"string\" }\r\n        },\r\n    \"additionalProperties\": false\r\n};\r\npm.response.to.have.jsonSchema(schema);\r\n});"
+                      "pm.test(\"Status code is 200\", function () {\r\n    pm.response.to.have.status(200);\r\n});\r\n\r\npm.test(\"All booking details are updated\", function () {\r\n    const newdetails = JSON.parse(pm.request.body.raw);\r\n    const response = pm.response.json();\r\n    const dates = response.bookingdates;\r\n    pm.expect(response.firstname).to.eql(newdetails.firstname);\r\n    pm.expect(response.lastname).to.eql(newdetails.lastname);\r\n    pm.expect(response.totalprice).to.eql(newdetails.totalprice);\r\n    pm.expect(response.depositpaid).to.eql(newdetails.depositpaid);\r\n    pm.expect(dates.checkin).to.eql(newdetails.bookingdates.checkin);\r\n    pm.expect(dates.checkout).to.eql(newdetails.bookingdates.checkout);\r\n    pm.expect(response.additionalneeds).to.eql(newdetails.additionalneeds);\r\n});\r\n\r\npm.test(\"All booking details are filled and have a correct format\", () => {\r\n    const schema = {\r\n        \"$schema\": \"http://json-schema.org/draft-07/schema#\",\r\n        \"type\": \"object\",\r\n        \"required\": [\"firstname\", \"lastname\", \"totalprice\", \"depositpaid\", \"bookingdates\", \"additionalneeds\"],\r\n        \"properties\": {\r\n            \"firstname\": { \"type\": \"string\", \"minLength\": 1 },\r\n            \"lastname\": { \"type\": \"string\", \"minLength\": 1 },\r\n            \"totalprice\": { \"type\": \"integer\", \"minimum\": 0 },\r\n            \"depositpaid\": { \"type\": \"boolean\" },\r\n            \"bookingdates\": {\r\n                \"type\": \"object\",\r\n                \"required\": [\"checkin\", \"checkout\"],\r\n                \"properties\": {\r\n                    \"checkin\": { \"type\": \"string\", \"format\": \"date\" },\r\n                    \"checkout\": { \"type\": \"string\", \"format\": \"date\" }\r\n                },\r\n                \"additionalProperties\": false\r\n            },\r\n            \"additionalneeds\": { \"type\": \"string\" }\r\n        },\r\n        \"additionalProperties\": false\r\n    };\r\n    pm.response.to.have.jsonSchema(schema);\r\n});"
                     ]
                   }
                 },
@@ -2187,14 +3221,14 @@
               "response": []
             },
             {
-              "name": "Update_booking (BA-auth) (pos_1)",
+              "name": "Полное обновление существующего бронирования (BA-auth)",
               "event": [
                 {
                   "listen": "test",
                   "script": {
                     "type": "text/javascript",
                     "exec": [
-                      "pm.test(\"Status code is 200\", function () {\r\n    pm.response.to.have.status(200)\r\n});\r\n\r\npm.test(\"All booking details are updated\", function () {\r\n    const newdetails = JSON.parse(pm.request.body.raw);\r\n    const response = pm.response.json();\r\n    const dates = response.bookingdates;\r\n    pm.expect(response.firstname).to.eql(newdetails.firstname);\r\n    pm.expect(response.lastname).to.eql(newdetails.lastname);\r\n    pm.expect(response.totalprice).to.eql(newdetails.totalprice);\r\n    pm.expect(response.depositpaid).to.eql(newdetails.depositpaid);\r\n    pm.expect(dates.checkin).to.eql(newdetails.bookingdates.checkin);\r\n    pm.expect(dates.checkout).to.eql(newdetails.bookingdates.checkout);\r\n    pm.expect(response.additionalneeds).to.eql(newdetails.additionalneeds);\r\n});\r\n\r\npm.test(\"All booking details are filled and have a correct format\", () => {\r\n    const schema = {\r\n    \"$schema\": \"http://json-schema.org/draft-07/schema#\",\r\n    \"type\": \"object\",\r\n    \"required\": [\"firstname\", \"lastname\", \"totalprice\", \"depositpaid\", \"bookingdates\", \"additionalneeds\"],\r\n    \"properties\": {\r\n        \"firstname\": { \"type\": \"string\", \"minLength\": 1 },\r\n        \"lastname\": { \"type\": \"string\", \"minLength\": 1 },\r\n        \"totalprice\": { \"type\": \"integer\", \"minimum\": 0 },\r\n        \"depositpaid\": { \"type\": \"boolean\" },\r\n        \"bookingdates\": {\r\n            \"type\": \"object\",\r\n            \"required\": [\"checkin\", \"checkout\"],\r\n            \"properties\": {\r\n                \"checkin\": { \"type\": \"string\", \"format\": \"date\" },\r\n                \"checkout\": { \"type\": \"string\", \"format\": \"date\" }\r\n                },\r\n                \"additionalProperties\": false\r\n            },\r\n        \"additionalneeds\": { \"type\": \"string\" }\r\n        },\r\n    \"additionalProperties\": false\r\n};\r\npm.response.to.have.jsonSchema(schema);\r\n});"
+                      "pm.test(\"Status code is 200\", function () {\r\n    pm.response.to.have.status(200)\r\n});\r\n\r\npm.test(\"All booking details are updated\", function () {\r\n    const newdetails = JSON.parse(pm.request.body.raw);\r\n    const response = pm.response.json();\r\n    const dates = response.bookingdates;\r\n    pm.expect(response.firstname).to.eql(newdetails.firstname);\r\n    pm.expect(response.lastname).to.eql(newdetails.lastname);\r\n    pm.expect(response.totalprice).to.eql(newdetails.totalprice);\r\n    pm.expect(response.depositpaid).to.eql(newdetails.depositpaid);\r\n    pm.expect(dates.checkin).to.eql(newdetails.bookingdates.checkin);\r\n    pm.expect(dates.checkout).to.eql(newdetails.bookingdates.checkout);\r\n    pm.expect(response.additionalneeds).to.eql(newdetails.additionalneeds);\r\n});\r\n\r\npm.test(\"All booking details are filled and have a correct format\", () => {\r\n    const schema = {\r\n        \"$schema\": \"http://json-schema.org/draft-07/schema#\",\r\n        \"type\": \"object\",\r\n        \"required\": [\"firstname\", \"lastname\", \"totalprice\", \"depositpaid\", \"bookingdates\", \"additionalneeds\"],\r\n        \"properties\": {\r\n            \"firstname\": { \"type\": \"string\", \"minLength\": 1 },\r\n            \"lastname\": { \"type\": \"string\", \"minLength\": 1 },\r\n            \"totalprice\": { \"type\": \"integer\", \"minimum\": 0 },\r\n            \"depositpaid\": { \"type\": \"boolean\" },\r\n            \"bookingdates\": {\r\n                \"type\": \"object\",\r\n                \"required\": [\"checkin\", \"checkout\"],\r\n                \"properties\": {\r\n                    \"checkin\": { \"type\": \"string\", \"format\": \"date\" },\r\n                    \"checkout\": { \"type\": \"string\", \"format\": \"date\" }\r\n                },\r\n                \"additionalProperties\": false\r\n            },\r\n            \"additionalneeds\": { \"type\": \"string\" }\r\n        },\r\n        \"additionalProperties\": false\r\n    };\r\n    pm.response.to.have.jsonSchema(schema);\r\n});"
                     ]
                   }
                 },
@@ -2262,7 +3296,7 @@
                   "script": {
                     "type": "text/javascript",
                     "exec": [
-                      "pm.test(\"Status code is 200\", function () {\r\n    pm.response.to.have.status(200);\r\n});\r\n\r\npm.test(\"All booking details are updated\", function () {\r\n    const newdetails = JSON.parse(pm.request.body.raw);\r\n    const response = pm.response.json();\r\n    const dates = response.bookingdates;\r\n    pm.expect(response.firstname).to.eql(newdetails.firstname);\r\n    pm.expect(response.lastname).to.eql(newdetails.lastname);\r\n    pm.expect(response.totalprice).to.eql(newdetails.totalprice);\r\n    pm.expect(response.depositpaid).to.eql(newdetails.depositpaid);\r\n    pm.expect(dates.checkin).to.eql(newdetails.bookingdates.checkin);\r\n    pm.expect(dates.checkout).to.eql(newdetails.bookingdates.checkout);\r\n    pm.expect(response.additionalneeds).to.eql(newdetails.additionalneeds);\r\n});\r\n\r\npm.test(\"All booking details are filled and have a correct format\", () => {\r\n    const schema = {\r\n    \"$schema\": \"http://json-schema.org/draft-07/schema#\",\r\n    \"type\": \"object\",\r\n    \"required\": [\"firstname\", \"lastname\", \"totalprice\", \"depositpaid\", \"bookingdates\", \"additionalneeds\"],\r\n    \"properties\": {\r\n        \"firstname\": { \"type\": \"string\", \"minLength\": 1 },\r\n        \"lastname\": { \"type\": \"string\", \"minLength\": 1 },\r\n        \"totalprice\": { \"type\": \"integer\", \"minimum\": 0 },\r\n        \"depositpaid\": { \"type\": \"boolean\" },\r\n        \"bookingdates\": {\r\n            \"type\": \"object\",\r\n            \"required\": [\"checkin\", \"checkout\"],\r\n            \"properties\": {\r\n                \"checkin\": { \"type\": \"string\", \"format\": \"date\" },\r\n                \"checkout\": { \"type\": \"string\", \"format\": \"date\" }\r\n                },\r\n                \"additionalProperties\": false\r\n            },\r\n        \"additionalneeds\": { \"type\": \"string\" }\r\n        },\r\n    \"additionalProperties\": false\r\n};\r\npm.response.to.have.jsonSchema(schema);\r\n});"
+                      "pm.test(\"Status code is 200\", function () {\r\n    pm.response.to.have.status(200);\r\n});\r\n\r\npm.test(\"All booking details are updated\", function () {\r\n    const newdetails = JSON.parse(pm.request.body.raw);\r\n    const response = pm.response.json();\r\n    const dates = response.bookingdates;\r\n    pm.expect(response.firstname).to.eql(newdetails.firstname);\r\n    pm.expect(response.lastname).to.eql(newdetails.lastname);\r\n    pm.expect(response.totalprice).to.eql(newdetails.totalprice);\r\n    pm.expect(response.depositpaid).to.eql(newdetails.depositpaid);\r\n    pm.expect(dates.checkin).to.eql(newdetails.bookingdates.checkin);\r\n    pm.expect(dates.checkout).to.eql(newdetails.bookingdates.checkout);\r\n    pm.expect(response.additionalneeds).to.eql(newdetails.additionalneeds);\r\n});\r\n\r\npm.test(\"All booking details are filled and have a correct format\", () => {\r\n    const schema = {\r\n        \"$schema\": \"http://json-schema.org/draft-07/schema#\",\r\n        \"type\": \"object\",\r\n        \"required\": [\"firstname\", \"lastname\", \"totalprice\", \"depositpaid\", \"bookingdates\", \"additionalneeds\"],\r\n        \"properties\": {\r\n            \"firstname\": { \"type\": \"string\", \"minLength\": 1 },\r\n            \"lastname\": { \"type\": \"string\", \"minLength\": 1 },\r\n            \"totalprice\": { \"type\": \"integer\", \"minimum\": 0 },\r\n            \"depositpaid\": { \"type\": \"boolean\" },\r\n            \"bookingdates\": {\r\n                \"type\": \"object\",\r\n                \"required\": [\"checkin\", \"checkout\"],\r\n                \"properties\": {\r\n                    \"checkin\": { \"type\": \"string\", \"format\": \"date\" },\r\n                    \"checkout\": { \"type\": \"string\", \"format\": \"date\" }\r\n                },\r\n                \"additionalProperties\": false\r\n            },\r\n            \"additionalneeds\": { \"type\": \"string\" }\r\n        },\r\n        \"additionalProperties\": false\r\n    };\r\n    pm.response.to.have.jsonSchema(schema);\r\n});"
                     ]
                   }
                 },
@@ -2271,7 +3305,7 @@
                   "script": {
                     "type": "text/javascript",
                     "exec": [
-                      "// run auth\nconst authUrl = pm.environment.get(\"HerokuApp\") + \"/auth\";\nconst authData = {\n    username: pm.environment.get(\"admin_username\"),\n    password: pm.environment.get(\"admin_password\")\n};\n\npm.sendRequest({\n    url: authUrl,\n    method: 'POST',\n    header: {\n        'Content-Type': 'application/json',\n        'Accept': 'application/json'\n    },\n    body: {\n        mode: 'raw',\n        raw: JSON.stringify(authData)\n    }\n}, function (error, response) {\n    if (error) {\n        console.error('Error during authentication:', error);\n    } else {\n        const authResponse = response.json();\n        pm.environment.set(\"access_token\", authResponse.token);\n        console.log(\"Access Token:\", authResponse.token);\n    }\n});\n\n// create new booking\nconst newBookingUrl = pm.environment.get(\"HerokuApp\") + \"/booking\";\nconst newBookingDetails = {\n\tfirstname : \"Oceane\",\n\tlastname : \"Kilback\",\n    totalprice : 420,\n\tdepositpaid : false,\n\tbookingdates : {\n    \tcheckin : \"2025-01-20\",\n    \tcheckout : \"2025-01-28\"\n\t},\n\tadditionalneeds : \"Computer\"\n}\npm.sendRequest({\n    url: newBookingUrl,\n    method: 'POST',\n    header: {\n        'Content-Type': 'application/json',\n        'Accept': 'application/json'\n    },\n    body: {\n        mode: 'raw',\n        raw: JSON.stringify(newBookingDetails)\n    }\n}, function (error, response) {\n    if (error) {\n        console.error('Error creating new booking:', error);\n    } else {\n        const jsonData = response.json()\n        pm.environment.set(\"booking_id_new\", jsonData.bookingid);\n        console.log(\"New booking ID:\", jsonData.bookingid);\n    }\n});\n\n// checkin\nconst today = new Date();\nconst checkinDate = new Date(today);\ncheckinDate.setDate(today.getDate() + 120);\nconst new_checkin = checkinDate.toISOString().split('T')[0];\npm.environment.set(\"new_checkin\", new_checkin);\nconsole.log(\"Check-in Date:\", new_checkin);\n\n// checkout\nconst checkoutDate = new Date(checkinDate);\ncheckoutDate.setDate(checkinDate.getDate() + 5);\nconst new_checkout = checkoutDate.toISOString().split('T')[0];\npm.environment.set(\"new_checkout\", new_checkout);\nconsole.log(\"Check-out Date:\", new_checkout);"
+                      "// run auth\nconst authUrl = pm.environment.get(\"HerokuApp\") + \"/auth\";\nconst authData = {\n    username: pm.environment.get(\"admin_username\"),\n    password: pm.environment.get(\"admin_password\")\n};\n\npm.sendRequest({\n    url: authUrl,\n    method: 'POST',\n    header: {\n        'Content-Type': 'application/json',\n        'Accept': 'application/json'\n    },\n    body: {\n        mode: 'raw',\n        raw: JSON.stringify(authData)\n    }\n}, function (error, response) {\n    if (error) {\n        console.error('Error during authentication:', error);\n    } else {\n        const authResponse = response.json();\n        pm.environment.set(\"access_token\", authResponse.token);\n        console.log(\"Access Token:\", authResponse.token);\n    }\n});\n\n// create new booking\nconst newBookingUrl = pm.environment.get(\"HerokuApp\") + \"/booking\";\nconst newBookingDetails = {\n    firstname: \"Oceane\",\n    lastname: \"Kilback\",\n    totalprice: 420,\n    depositpaid: false,\n    bookingdates: {\n        checkin: \"2025-01-20\",\n        checkout: \"2025-01-28\"\n    },\n    additionalneeds: \"Computer\"\n}\npm.sendRequest({\n    url: newBookingUrl,\n    method: 'POST',\n    header: {\n        'Content-Type': 'application/json',\n        'Accept': 'application/json'\n    },\n    body: {\n        mode: 'raw',\n        raw: JSON.stringify(newBookingDetails)\n    }\n}, function (error, response) {\n    if (error) {\n        console.error('Error creating new booking:', error);\n    } else {\n        const jsonData = response.json()\n        pm.environment.set(\"booking_id_new\", jsonData.bookingid);\n        console.log(\"New booking ID:\", jsonData.bookingid);\n    }\n});\n\n// checkin\nconst today = new Date();\nconst checkinDate = new Date(today);\ncheckinDate.setDate(today.getDate() + 120);\nconst new_checkin = checkinDate.toISOString().split('T')[0];\npm.environment.set(\"new_checkin\", new_checkin);\nconsole.log(\"Check-in Date:\", new_checkin);\n\n// checkout\nconst checkoutDate = new Date(checkinDate);\ncheckoutDate.setDate(checkinDate.getDate() + 5);\nconst new_checkout = checkoutDate.toISOString().split('T')[0];\npm.environment.set(\"new_checkout\", new_checkout);\nconsole.log(\"Check-out Date:\", new_checkout);"
                     ]
                   }
                 }
@@ -2388,14 +3422,14 @@
               "response": []
             },
             {
-              "name": "Update_booking (Token-auth) (pos_3)",
+              "name": "Обновление бронирования теми же данными (Token-auth)",
               "event": [
                 {
                   "listen": "test",
                   "script": {
                     "type": "text/javascript",
                     "exec": [
-                      "pm.test(\"Status code is 200\", function () {\r\n    pm.response.to.have.status(200);\r\n});\r\n\r\npm.test(\"All booking details are updated\", function () {\r\n    const newdetails = JSON.parse(pm.request.body.raw);\r\n    const response = pm.response.json();\r\n    const dates = response.bookingdates;\r\n    pm.expect(response.firstname).to.eql(newdetails.firstname);\r\n    pm.expect(response.lastname).to.eql(newdetails.lastname);\r\n    pm.expect(response.totalprice).to.eql(newdetails.totalprice);\r\n    pm.expect(response.depositpaid).to.eql(newdetails.depositpaid);\r\n    pm.expect(dates.checkin).to.eql(newdetails.bookingdates.checkin);\r\n    pm.expect(dates.checkout).to.eql(newdetails.bookingdates.checkout);\r\n    pm.expect(response.additionalneeds).to.eql(newdetails.additionalneeds);\r\n});\r\n\r\npm.test(\"All booking details are filled and have a correct format\", () => {\r\n    const schema = {\r\n    \"$schema\": \"http://json-schema.org/draft-07/schema#\",\r\n    \"type\": \"object\",\r\n    \"required\": [\"firstname\", \"lastname\", \"totalprice\", \"depositpaid\", \"bookingdates\", \"additionalneeds\"],\r\n    \"properties\": {\r\n        \"firstname\": { \"type\": \"string\", \"minLength\": 1 },\r\n        \"lastname\": { \"type\": \"string\", \"minLength\": 1 },\r\n        \"totalprice\": { \"type\": \"integer\", \"minimum\": 0 },\r\n        \"depositpaid\": { \"type\": \"boolean\" },\r\n        \"bookingdates\": {\r\n            \"type\": \"object\",\r\n            \"required\": [\"checkin\", \"checkout\"],\r\n            \"properties\": {\r\n                \"checkin\": { \"type\": \"string\", \"format\": \"date\" },\r\n                \"checkout\": { \"type\": \"string\", \"format\": \"date\" }\r\n                },\r\n                \"additionalProperties\": false\r\n            },\r\n        \"additionalneeds\": { \"type\": \"string\" }\r\n        },\r\n    \"additionalProperties\": false\r\n};\r\npm.response.to.have.jsonSchema(schema);\r\n});"
+                      "pm.test(\"Status code is 200\", function () {\r\n    pm.response.to.have.status(200);\r\n});\r\n\r\npm.test(\"All booking details are updated\", function () {\r\n    const newdetails = JSON.parse(pm.request.body.raw);\r\n    const response = pm.response.json();\r\n    const dates = response.bookingdates;\r\n    pm.expect(response.firstname).to.eql(newdetails.firstname);\r\n    pm.expect(response.lastname).to.eql(newdetails.lastname);\r\n    pm.expect(response.totalprice).to.eql(newdetails.totalprice);\r\n    pm.expect(response.depositpaid).to.eql(newdetails.depositpaid);\r\n    pm.expect(dates.checkin).to.eql(newdetails.bookingdates.checkin);\r\n    pm.expect(dates.checkout).to.eql(newdetails.bookingdates.checkout);\r\n    pm.expect(response.additionalneeds).to.eql(newdetails.additionalneeds);\r\n});\r\n\r\npm.test(\"All booking details are filled and have a correct format\", () => {\r\n    const schema = {\r\n        \"$schema\": \"http://json-schema.org/draft-07/schema#\",\r\n        \"type\": \"object\",\r\n        \"required\": [\"firstname\", \"lastname\", \"totalprice\", \"depositpaid\", \"bookingdates\", \"additionalneeds\"],\r\n        \"properties\": {\r\n            \"firstname\": { \"type\": \"string\", \"minLength\": 1 },\r\n            \"lastname\": { \"type\": \"string\", \"minLength\": 1 },\r\n            \"totalprice\": { \"type\": \"integer\", \"minimum\": 0 },\r\n            \"depositpaid\": { \"type\": \"boolean\" },\r\n            \"bookingdates\": {\r\n                \"type\": \"object\",\r\n                \"required\": [\"checkin\", \"checkout\"],\r\n                \"properties\": {\r\n                    \"checkin\": { \"type\": \"string\", \"format\": \"date\" },\r\n                    \"checkout\": { \"type\": \"string\", \"format\": \"date\" }\r\n                },\r\n                \"additionalProperties\": false\r\n            },\r\n            \"additionalneeds\": { \"type\": \"string\" }\r\n        },\r\n        \"additionalProperties\": false\r\n    };\r\n    pm.response.to.have.jsonSchema(schema);\r\n});"
                     ]
                   }
                 },
@@ -2404,7 +3438,7 @@
                   "script": {
                     "type": "text/javascript",
                     "exec": [
-                      "// run auth\nconst authUrl = pm.environment.get(\"HerokuApp\") + \"/auth\";\nconst authData = {\n    username: pm.environment.get(\"admin_username\"),\n    password: pm.environment.get(\"admin_password\")\n};\n\npm.sendRequest({\n    url: authUrl,\n    method: 'POST',\n    header: {\n        'Content-Type': 'application/json',\n        'Accept': 'application/json'\n    },\n    body: {\n        mode: 'raw',\n        raw: JSON.stringify(authData)\n    }\n}, function (error, response) {\n    if (error) {\n        console.error('Error during authentication:', error);\n    } else {\n        const authResponse = response.json();\n        pm.environment.set(\"access_token\", authResponse.token);\n        console.log(\"Access Token:\", authResponse.token);\n    }\n});\n\n// create new booking\nconst newBookingUrl = pm.environment.get(\"HerokuApp\") + \"/booking\";\nconst newBookingDetails = {\n\tfirstname : \"Oceane\",\n\tlastname : \"Kilback\",\n    totalprice : 420,\n\tdepositpaid : false,\n\tbookingdates : {\n    \tcheckin : \"2025-01-20\",\n    \tcheckout : \"2025-01-28\"\n\t},\n\tadditionalneeds : \"Computer\"\n}\npm.sendRequest({\n    url: newBookingUrl,\n    method: 'POST',\n    header: {\n        'Content-Type': 'application/json',\n        'Accept': 'application/json'\n    },\n    body: {\n        mode: 'raw',\n        raw: JSON.stringify(newBookingDetails)\n    }\n}, function (error, response) {\n    if (error) {\n        console.error('Error creating new booking:', error);\n    } else {\n        const jsonData = response.json()\n        pm.environment.set(\"booking_id_new\", jsonData.bookingid);\n        console.log(\"New booking ID:\", jsonData.bookingid);\n    }\n});"
+                      "// run auth\nconst authUrl = pm.environment.get(\"HerokuApp\") + \"/auth\";\nconst authData = {\n    username: pm.environment.get(\"admin_username\"),\n    password: pm.environment.get(\"admin_password\")\n};\n\npm.sendRequest({\n    url: authUrl,\n    method: 'POST',\n    header: {\n        'Content-Type': 'application/json',\n        'Accept': 'application/json'\n    },\n    body: {\n        mode: 'raw',\n        raw: JSON.stringify(authData)\n    }\n}, function (error, response) {\n    if (error) {\n        console.error('Error during authentication:', error);\n    } else {\n        const authResponse = response.json();\n        pm.environment.set(\"access_token\", authResponse.token);\n        console.log(\"Access Token:\", authResponse.token);\n    }\n});\n\n// create new booking\nconst newBookingUrl = pm.environment.get(\"HerokuApp\") + \"/booking\";\nconst newBookingDetails = {\n    firstname: \"Oceane\",\n    lastname: \"Kilback\",\n    totalprice: 420,\n    depositpaid: false,\n    bookingdates: {\n        checkin: \"2025-01-20\",\n        checkout: \"2025-01-28\"\n    },\n    additionalneeds: \"Computer\"\n}\npm.sendRequest({\n    url: newBookingUrl,\n    method: 'POST',\n    header: {\n        'Content-Type': 'application/json',\n        'Accept': 'application/json'\n    },\n    body: {\n        mode: 'raw',\n        raw: JSON.stringify(newBookingDetails)\n    }\n}, function (error, response) {\n    if (error) {\n        console.error('Error creating new booking:', error);\n    } else {\n        const jsonData = response.json()\n        pm.environment.set(\"booking_id_new\", jsonData.bookingid);\n        console.log(\"New booking ID:\", jsonData.bookingid);\n    }\n});"
                     ]
                   }
                 }
@@ -2453,14 +3487,14 @@
               "response": []
             },
             {
-              "name": "Update_booking (BA-auth) (pos_3)",
+              "name": "Обновление бронирования теми же данными (BA-auth)",
               "event": [
                 {
                   "listen": "test",
                   "script": {
                     "type": "text/javascript",
                     "exec": [
-                      "pm.test(\"Status code is 200\", function () {\r\n    pm.response.to.have.status(200)\r\n});\r\n\r\npm.test(\"All booking details are updated\", function () {\r\n    const newdetails = JSON.parse(pm.request.body.raw);\r\n    const response = pm.response.json();\r\n    pm.expect(response.firstname).to.eql(newdetails.firstname);\r\n    pm.expect(response.lastname).to.eql(newdetails.lastname);\r\n    pm.expect(response.totalprice).to.eql(newdetails.totalprice);\r\n    pm.expect(response.depositpaid).to.eql(newdetails.depositpaid);\r\n    pm.expect(response.bookingdates.checkin).to.eql(newdetails.bookingdates.checkin);\r\n    pm.expect(response.bookingdates.checkout).to.eql(newdetails.bookingdates.checkout);\r\n    pm.expect(response.additionalneeds).to.eql(newdetails.additionalneeds);\r\n});\r\n\r\npm.test(\"All booking details are filled and have a correct format\", () => {\r\n    const schema = {\r\n    \"$schema\": \"http://json-schema.org/draft-07/schema#\",\r\n    \"type\": \"object\",\r\n    \"required\": [\"firstname\", \"lastname\", \"totalprice\", \"depositpaid\", \"bookingdates\", \"additionalneeds\"],\r\n    \"properties\": {\r\n        \"firstname\": { \"type\": \"string\", \"minLength\": 1 },\r\n        \"lastname\": { \"type\": \"string\", \"minLength\": 1 },\r\n        \"totalprice\": { \"type\": \"integer\", \"minimum\": 0 },\r\n        \"depositpaid\": { \"type\": \"boolean\" },\r\n        \"bookingdates\": {\r\n            \"type\": \"object\",\r\n            \"required\": [\"checkin\", \"checkout\"],\r\n            \"properties\": {\r\n                \"checkin\": { \"type\": \"string\", \"format\": \"date\" },\r\n                \"checkout\": { \"type\": \"string\", \"format\": \"date\" }\r\n                },\r\n                \"additionalProperties\": false\r\n            },\r\n        \"additionalneeds\": { \"type\": \"string\" }\r\n        },\r\n    \"additionalProperties\": false\r\n};\r\npm.response.to.have.jsonSchema(schema);\r\n});"
+                      "pm.test(\"Status code is 200\", function () {\r\n    pm.response.to.have.status(200)\r\n});\r\n\r\npm.test(\"All booking details are updated\", function () {\r\n    const newdetails = JSON.parse(pm.request.body.raw);\r\n    const response = pm.response.json();\r\n    pm.expect(response.firstname).to.eql(newdetails.firstname);\r\n    pm.expect(response.lastname).to.eql(newdetails.lastname);\r\n    pm.expect(response.totalprice).to.eql(newdetails.totalprice);\r\n    pm.expect(response.depositpaid).to.eql(newdetails.depositpaid);\r\n    pm.expect(response.bookingdates.checkin).to.eql(newdetails.bookingdates.checkin);\r\n    pm.expect(response.bookingdates.checkout).to.eql(newdetails.bookingdates.checkout);\r\n    pm.expect(response.additionalneeds).to.eql(newdetails.additionalneeds);\r\n});\r\n\r\npm.test(\"All booking details are filled and have a correct format\", () => {\r\n    const schema = {\r\n        \"$schema\": \"http://json-schema.org/draft-07/schema#\",\r\n        \"type\": \"object\",\r\n        \"required\": [\"firstname\", \"lastname\", \"totalprice\", \"depositpaid\", \"bookingdates\", \"additionalneeds\"],\r\n        \"properties\": {\r\n            \"firstname\": { \"type\": \"string\", \"minLength\": 1 },\r\n            \"lastname\": { \"type\": \"string\", \"minLength\": 1 },\r\n            \"totalprice\": { \"type\": \"integer\", \"minimum\": 0 },\r\n            \"depositpaid\": { \"type\": \"boolean\" },\r\n            \"bookingdates\": {\r\n                \"type\": \"object\",\r\n                \"required\": [\"checkin\", \"checkout\"],\r\n                \"properties\": {\r\n                    \"checkin\": { \"type\": \"string\", \"format\": \"date\" },\r\n                    \"checkout\": { \"type\": \"string\", \"format\": \"date\" }\r\n                },\r\n                \"additionalProperties\": false\r\n            },\r\n            \"additionalneeds\": { \"type\": \"string\" }\r\n        },\r\n        \"additionalProperties\": false\r\n    };\r\n    pm.response.to.have.jsonSchema(schema);\r\n});"
                     ]
                   }
                 },
@@ -2469,7 +3503,7 @@
                   "script": {
                     "type": "text/javascript",
                     "exec": [
-                      "// create new booking\r\nconst newBookingUrl = pm.environment.get(\"HerokuApp\") + \"/booking\";\r\nconst newBookingDetails = {\r\n\tfirstname : \"Oceane\",\r\n\tlastname : \"Kilback\",\r\n    totalprice : 420,\r\n\tdepositpaid : false,\r\n\tbookingdates : {\r\n    \tcheckin : \"2025-01-20\",\r\n    \tcheckout : \"2025-01-28\"\r\n\t},\r\n\tadditionalneeds : \"Computer\"\r\n}\r\npm.sendRequest({\r\n    url: newBookingUrl,\r\n    method: 'POST',\r\n    header: {\r\n        'Content-Type': 'application/json',\r\n        'Accept': 'application/json'\r\n    },\r\n    body: {\r\n        mode: 'raw',\r\n        raw: JSON.stringify(newBookingDetails)\r\n    }\r\n}, function (error, response) {\r\n    if (error) {\r\n        console.error('Error creating new booking:', error);\r\n    } else {\r\n        const jsonData = response.json()\r\n        pm.environment.set(\"booking_id_new\", jsonData.bookingid);\r\n        console.log(\"New booking ID:\", jsonData.bookingid);\r\n    }\r\n});"
+                      "// create new booking\r\nconst newBookingUrl = pm.environment.get(\"HerokuApp\") + \"/booking\";\r\nconst newBookingDetails = {\r\n    firstname: \"Oceane\",\r\n    lastname: \"Kilback\",\r\n    totalprice: 420,\r\n    depositpaid: false,\r\n    bookingdates: {\r\n        checkin: \"2025-01-20\",\r\n        checkout: \"2025-01-28\"\r\n    },\r\n    additionalneeds: \"Computer\"\r\n}\r\npm.sendRequest({\r\n    url: newBookingUrl,\r\n    method: 'POST',\r\n    header: {\r\n        'Content-Type': 'application/json',\r\n        'Accept': 'application/json'\r\n    },\r\n    body: {\r\n        mode: 'raw',\r\n        raw: JSON.stringify(newBookingDetails)\r\n    }\r\n}, function (error, response) {\r\n    if (error) {\r\n        console.error('Error creating new booking:', error);\r\n    } else {\r\n        const jsonData = response.json()\r\n        pm.environment.set(\"booking_id_new\", jsonData.bookingid);\r\n        console.log(\"New booking ID:\", jsonData.bookingid);\r\n    }\r\n});"
                     ]
                   }
                 }
@@ -2521,7 +3555,7 @@
               "response": []
             },
             {
-              "name": "Update_booking (neg_1)",
+              "name": "Обновление бронирования (PUT без авторизации)",
               "event": [
                 {
                   "listen": "test",
@@ -2582,7 +3616,7 @@
               "response": []
             },
             {
-              "name": "Update_booking (neg_2)",
+              "name": "Обновление бронирования (PUT с неверным токеном)",
               "event": [
                 {
                   "listen": "test",
@@ -2647,7 +3681,7 @@
               "response": []
             },
             {
-              "name": "Update_booking (neg_3)",
+              "name": "Обновление бронирования (PUT с авторизацией через Authorization-заголовок вместо Cookie)",
               "event": [
                 {
                   "listen": "test",
@@ -2718,7 +3752,7 @@
               "response": []
             },
             {
-              "name": "Update_booking (neg_4)",
+              "name": "Обновление бронирования (PUT на несуществующий ID)",
               "event": [
                 {
                   "listen": "test",
@@ -2786,7 +3820,75 @@
               "response": []
             },
             {
-              "name": "Update_booking (neg_5)",
+              "name": "Обновление бронирования (PUT на буквенный ID)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 400\", function () {\r\n    pm.response.to.have.status(400)\r\n});\r\n\r\npm.test(\"Response body is not JSON\", function () {\r\n    pm.expect(pm.response.headers.get(\"Content-Type\")).to.not.include(\"application/json\");\r\n});"
+                    ]
+                  }
+                },
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "// check if bookingId is not valid\r\nconst nonValidBookingUrl = pm.environment.get(\"HerokuApp\") + \"/booking/\" + pm.environment.get(\"nonValidBookingId\");\r\npm.test(\"Booking ID is not valid\", function () {\r\n    pm.sendRequest({\r\n    url: nonValidBookingUrl,\r\n    method: 'GET',\r\n    header: {\r\n        'Content-Type': 'application/json',\r\n        'Accept': 'application/json'\r\n    }\r\n    }, function (error, response) {\r\n        if (error)\r\n        throw new Error(\"Booking ID is valid. Enter a non valid booking ID\");\r\n        else {\r\n        pm.expect(response.code).to.eql(404);\r\n        }\r\n    });\r\n});\r\n\r\n// checkin\r\nconst today = new Date();\r\nconst checkinDate = new Date(today);\r\ncheckinDate.setDate(today.getDate() + 120);\r\nconst new_checkin = checkinDate.toISOString().split('T')[0];\r\npm.environment.set(\"new_checkin\", new_checkin);\r\nconsole.log(\"Check-in Date:\", new_checkin);\r\n\r\n// checkout\r\nconst checkoutDate = new Date(checkinDate);\r\ncheckoutDate.setDate(checkinDate.getDate() + 5);\r\nconst new_checkout = checkoutDate.toISOString().split('T')[0];\r\npm.environment.set(\"new_checkout\", new_checkout);\r\nconsole.log(\"Check-out Date:\", new_checkout);"
+                    ]
+                  }
+                }
+              ],
+              "protocolProfileBehavior": {
+                "disabledSystemHeaders": {
+                  "accept": true
+                }
+              },
+              "request": {
+                "auth": {
+                  "type": "noauth"
+                },
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Basic YWRtaW46cGFzc3dvcmQxMjM="
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n\t\"firstname\" : \"{{$randomFirstName}}\",\r\n\t\"lastname\" : \"{{$randomLastName}}\",\r\n\t\"totalprice\" : {{$randomInt}},\r\n\t\"depositpaid\" : {{$randomBoolean}},\r\n\t\"bookingdates\" : {\r\n    \t\"checkin\" : \"{{new_checkin}}\",\r\n    \t\"checkout\" : \"{{new_checkout}}\"\r\n\t},\r\n\t\"additionalneeds\" : \"{{$randomProduct}}\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{HerokuApp}}/booking/textid",
+                  "host": [
+                    "{{HerokuApp}}"
+                  ],
+                  "path": [
+                    "booking",
+                    "textid"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Обновление бронирования (PUT с неполным телом)",
               "event": [
                 {
                   "listen": "test",
@@ -2851,7 +3953,7 @@
               "response": []
             },
             {
-              "name": "Update_booking (neg_6)",
+              "name": "Обновление бронирования (PUT с пустым телом)",
               "event": [
                 {
                   "listen": "test",
@@ -2916,7 +4018,7 @@
               "response": []
             },
             {
-              "name": "Update_booking (neg_7)",
+              "name": "Обновление бронирования (PUT с неверным Content-Type)",
               "event": [
                 {
                   "listen": "test",
@@ -2981,7 +4083,7 @@
               "response": []
             },
             {
-              "name": "Update_booking (neg_8)",
+              "name": "Обновление бронирования (PUT с невалидным JSON)",
               "event": [
                 {
                   "listen": "test",
@@ -3046,7 +4148,7 @@
               "response": []
             },
             {
-              "name": "Update_booking (neg_9)",
+              "name": "Обновление бронирования (PUT с неверным типом данных)",
               "event": [
                 {
                   "listen": "test",
@@ -3111,7 +4213,7 @@
               "response": []
             },
             {
-              "name": "Update_booking (neg_10)",
+              "name": "Обновление бронирования (PUT с неверным форматом даты)",
               "event": [
                 {
                   "listen": "test",
@@ -3176,7 +4278,7 @@
               "response": []
             },
             {
-              "name": "Update_booking (neg_11)",
+              "name": "Обновление бронирования (SQL-инъекция в string-параметр)",
               "event": [
                 {
                   "listen": "test",
@@ -3243,7 +4345,7 @@
           ]
         },
         {
-          "name": "5.3. booking/:id (PATCH)",
+          "name": "4.3. booking/:id (PATCH)",
           "item": [
             {
               "name": "PartUpd_booking (token-auth) (pos_1)",
@@ -3289,6 +4391,74 @@
                   {
                     "key": "Cookie",
                     "value": "token={{access_token}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n\t\"firstname\" : \"Jerry\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{HerokuApp}}/booking/{{booking_id_new}}",
+                  "host": [
+                    "{{HerokuApp}}"
+                  ],
+                  "path": [
+                    "booking",
+                    "{{booking_id_new}}"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "PartUpd_booking (BA-auth) (pos_1)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () {\r\n    pm.response.to.have.status(200)\r\n});\r\n\r\npm.test(\"Booking details are updated\", function () {\r\n    const requestBody = JSON.parse(pm.request.body.raw);\r\n    const response = pm.response.json();\r\n    pm.expect(response.firstname).to.eql(requestBody.firstname);\r\n});\r\n\r\npm.test(\"All booking details are filled and have a correct format\", () => {\r\n    const schema = {\r\n    \"$schema\": \"http://json-schema.org/draft-07/schema#\",\r\n    \"type\": \"object\",\r\n    \"required\": [\"firstname\", \"lastname\", \"totalprice\", \"depositpaid\", \"bookingdates\", \"additionalneeds\"],\r\n    \"properties\": {\r\n        \"firstname\": { \"type\": \"string\", \"minLength\": 1 },\r\n        \"lastname\": { \"type\": \"string\", \"minLength\": 1 },\r\n        \"totalprice\": { \"type\": \"integer\", \"minimum\": 0 },\r\n        \"depositpaid\": { \"type\": \"boolean\" },\r\n        \"bookingdates\": {\r\n            \"type\": \"object\",\r\n            \"required\": [\"checkin\", \"checkout\"],\r\n            \"properties\": {\r\n                \"checkin\": { \"type\": \"string\", \"format\": \"date\" },\r\n                \"checkout\": { \"type\": \"string\", \"format\": \"date\" }\r\n                },\r\n                \"additionalProperties\": false\r\n            },\r\n        \"additionalneeds\": { \"type\": \"string\" }\r\n        },\r\n    \"additionalProperties\": false\r\n};\r\npm.response.to.have.jsonSchema(schema);\r\n});"
+                    ]
+                  }
+                },
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "// create new booking\r\nconst newBookingUrl = pm.environment.get(\"HerokuApp\") + \"/booking\";\r\nconst newBookingDetails = {\r\n\tfirstname : \"Oceane\",\r\n\tlastname : \"Kilback\",\r\n    totalprice : 420,\r\n\tdepositpaid : false,\r\n\tbookingdates : {\r\n    \tcheckin : \"2025-01-20\",\r\n    \tcheckout : \"2025-01-28\"\r\n\t},\r\n\tadditionalneeds : \"Computer\"\r\n}\r\npm.sendRequest({\r\n    url: newBookingUrl,\r\n    method: 'POST',\r\n    header: {\r\n        'Content-Type': 'application/json',\r\n        'Accept': 'application/json'\r\n    },\r\n    body: {\r\n        mode: 'raw',\r\n        raw: JSON.stringify(newBookingDetails)\r\n    }\r\n}, function (error, response) {\r\n    if (error) {\r\n        console.error('Error creating new booking:', error);\r\n    } else {\r\n        const jsonData = response.json()\r\n        pm.environment.set(\"booking_id_new\", jsonData.bookingid);\r\n        console.log(\"New booking ID:\", jsonData.bookingid);\r\n    }\r\n});"
+                    ]
+                  }
+                }
+              ],
+              "protocolProfileBehavior": {
+                "disabledSystemHeaders": {
+                  "accept": true
+                }
+              },
+              "request": {
+                "auth": {
+                  "type": "noauth"
+                },
+                "method": "PATCH",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Basic YWRtaW46cGFzc3dvcmQxMjM="
                   }
                 ],
                 "body": {
@@ -3382,6 +4552,74 @@
               "response": []
             },
             {
+              "name": "PartUpd_booking (BA-auth) (pos_2)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () {\r\n    pm.response.to.have.status(200)\r\n});\r\n\r\npm.test(\"Booking details are updated\", function () {\r\n    const requestBody = JSON.parse(pm.request.body.raw);\r\n    const response = pm.response.json();\r\n    pm.expect(response.firstname).to.eql(requestBody.firstname);\r\n    pm.expect(response.totalprice).to.eql(requestBody.totalprice);\r\n});\r\n\r\npm.test(\"All booking details are filled and have a correct format\", () => {\r\n    const schema = {\r\n    \"$schema\": \"http://json-schema.org/draft-07/schema#\",\r\n    \"type\": \"object\",\r\n    \"required\": [\"firstname\", \"lastname\", \"totalprice\", \"depositpaid\", \"bookingdates\", \"additionalneeds\"],\r\n    \"properties\": {\r\n        \"firstname\": { \"type\": \"string\", \"minLength\": 1 },\r\n        \"lastname\": { \"type\": \"string\", \"minLength\": 1 },\r\n        \"totalprice\": { \"type\": \"integer\", \"minimum\": 0 },\r\n        \"depositpaid\": { \"type\": \"boolean\" },\r\n        \"bookingdates\": {\r\n            \"type\": \"object\",\r\n            \"required\": [\"checkin\", \"checkout\"],\r\n            \"properties\": {\r\n                \"checkin\": { \"type\": \"string\", \"format\": \"date\" },\r\n                \"checkout\": { \"type\": \"string\", \"format\": \"date\" }\r\n                },\r\n                \"additionalProperties\": false\r\n            },\r\n        \"additionalneeds\": { \"type\": \"string\" }\r\n        },\r\n    \"additionalProperties\": false\r\n};\r\npm.response.to.have.jsonSchema(schema);\r\n});"
+                    ]
+                  }
+                },
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "// create new booking\r\nconst newBookingUrl = pm.environment.get(\"HerokuApp\") + \"/booking\";\r\nconst newBookingDetails = {\r\n\tfirstname : \"Oceane\",\r\n\tlastname : \"Kilback\",\r\n    totalprice : 420,\r\n\tdepositpaid : false,\r\n\tbookingdates : {\r\n    \tcheckin : \"2025-01-20\",\r\n    \tcheckout : \"2025-01-28\"\r\n\t},\r\n\tadditionalneeds : \"Computer\"\r\n}\r\npm.sendRequest({\r\n    url: newBookingUrl,\r\n    method: 'POST',\r\n    header: {\r\n        'Content-Type': 'application/json',\r\n        'Accept': 'application/json'\r\n    },\r\n    body: {\r\n        mode: 'raw',\r\n        raw: JSON.stringify(newBookingDetails)\r\n    }\r\n}, function (error, response) {\r\n    if (error) {\r\n        console.error('Error creating new booking:', error);\r\n    } else {\r\n        const jsonData = response.json()\r\n        pm.environment.set(\"booking_id_new\", jsonData.bookingid);\r\n        console.log(\"New booking ID:\", jsonData.bookingid);\r\n    }\r\n});"
+                    ]
+                  }
+                }
+              ],
+              "protocolProfileBehavior": {
+                "disabledSystemHeaders": {
+                  "accept": true
+                }
+              },
+              "request": {
+                "auth": {
+                  "type": "noauth"
+                },
+                "method": "PATCH",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Basic YWRtaW46cGFzc3dvcmQxMjM="
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n\t\"firstname\" : \"Jerry\",\r\n\t\"totalprice\" : 999\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{HerokuApp}}/booking/{{booking_id_new}}",
+                  "host": [
+                    "{{HerokuApp}}"
+                  ],
+                  "path": [
+                    "booking",
+                    "{{booking_id_new}}"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
               "name": "PartUpd_booking (token-auth) (pos_3)",
               "event": [
                 {
@@ -3425,6 +4663,74 @@
                   {
                     "key": "Cookie",
                     "value": "token={{access_token}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n\"bookingdates\" : {\r\n    \t\"checkin\" : \"{{new_checkin}}\",\r\n    \t\"checkout\" : \"{{new_checkout}}\"\r\n\t}\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{HerokuApp}}/booking/{{booking_id_new}}",
+                  "host": [
+                    "{{HerokuApp}}"
+                  ],
+                  "path": [
+                    "booking",
+                    "{{booking_id_new}}"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "PartUpd_booking (BA-auth) (pos_3)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () {\r\n    pm.response.to.have.status(200)\r\n});\r\n\r\npm.test(\"Booking details are updated\", function () {\r\n    const requestBody = JSON.parse(pm.request.body.raw);\r\n    const response = pm.response.json();\r\n    pm.expect(response.bookingdates.checkin).to.eql(requestBody.bookingdates.checkin);\r\n    pm.expect(response.bookingdates.checkout).to.eql(requestBody.bookingdates.checkout);\r\n});\r\n\r\npm.test(\"All booking details are filled and have a correct format\", () => {\r\n    const schema = {\r\n    \"$schema\": \"http://json-schema.org/draft-07/schema#\",\r\n    \"type\": \"object\",\r\n    \"required\": [\"firstname\", \"lastname\", \"totalprice\", \"depositpaid\", \"bookingdates\", \"additionalneeds\"],\r\n    \"properties\": {\r\n        \"firstname\": { \"type\": \"string\", \"minLength\": 1 },\r\n        \"lastname\": { \"type\": \"string\", \"minLength\": 1 },\r\n        \"totalprice\": { \"type\": \"integer\", \"minimum\": 0 },\r\n        \"depositpaid\": { \"type\": \"boolean\" },\r\n        \"bookingdates\": {\r\n            \"type\": \"object\",\r\n            \"required\": [\"checkin\", \"checkout\"],\r\n            \"properties\": {\r\n                \"checkin\": { \"type\": \"string\", \"format\": \"date\" },\r\n                \"checkout\": { \"type\": \"string\", \"format\": \"date\" }\r\n                },\r\n                \"additionalProperties\": false\r\n            },\r\n        \"additionalneeds\": { \"type\": \"string\" }\r\n        },\r\n    \"additionalProperties\": false\r\n};\r\npm.response.to.have.jsonSchema(schema);\r\n});"
+                    ]
+                  }
+                },
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "// create new booking\r\nconst newBookingUrl = pm.environment.get(\"HerokuApp\") + \"/booking\";\r\nconst newBookingDetails = {\r\n\tfirstname : \"Oceane\",\r\n\tlastname : \"Kilback\",\r\n    totalprice : 420,\r\n\tdepositpaid : false,\r\n\tbookingdates : {\r\n    \tcheckin : \"2025-01-20\",\r\n    \tcheckout : \"2025-01-28\"\r\n\t},\r\n\tadditionalneeds : \"Computer\"\r\n}\r\npm.sendRequest({\r\n    url: newBookingUrl,\r\n    method: 'POST',\r\n    header: {\r\n        'Content-Type': 'application/json',\r\n        'Accept': 'application/json'\r\n    },\r\n    body: {\r\n        mode: 'raw',\r\n        raw: JSON.stringify(newBookingDetails)\r\n    }\r\n}, function (error, response) {\r\n    if (error) {\r\n        console.error('Error creating new booking:', error);\r\n    } else {\r\n        const jsonData = response.json()\r\n        pm.environment.set(\"booking_id_new\", jsonData.bookingid);\r\n        console.log(\"New booking ID:\", jsonData.bookingid);\r\n    }\r\n});\r\n\r\n// checkin\r\nconst moment = require('moment');\r\n// Set today's date and format it\r\nconst today = moment();\r\nconst new_checkin = today.add(180, 'days').format(\"YYYY-MM-DD\");\r\npm.environment.set(\"new_checkin\", new_checkin);\r\nconsole.log(\"Check-in Date:\", new_checkin);\r\n\r\n// checkout\r\nconst new_checkout = moment(new_checkin).add(5, 'days').format(\"YYYY-MM-DD\");\r\npm.environment.set(\"new_checkout\", new_checkout);\r\nconsole.log(\"Check-out Date:\", new_checkout);"
+                    ]
+                  }
+                }
+              ],
+              "protocolProfileBehavior": {
+                "disabledSystemHeaders": {
+                  "accept": true
+                }
+              },
+              "request": {
+                "auth": {
+                  "type": "noauth"
+                },
+                "method": "PATCH",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Basic YWRtaW46cGFzc3dvcmQxMjM="
                   }
                 ],
                 "body": {
@@ -3498,210 +4804,6 @@
                 "body": {
                   "mode": "raw",
                   "raw": "{\r\n\"depositpaid\" : true\r\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                },
-                "url": {
-                  "raw": "{{HerokuApp}}/booking/{{booking_id_new}}",
-                  "host": [
-                    "{{HerokuApp}}"
-                  ],
-                  "path": [
-                    "booking",
-                    "{{booking_id_new}}"
-                  ]
-                }
-              },
-              "response": []
-            },
-            {
-              "name": "PartUpd_booking (BA-auth) (pos_1)",
-              "event": [
-                {
-                  "listen": "test",
-                  "script": {
-                    "type": "text/javascript",
-                    "exec": [
-                      "pm.test(\"Status code is 200\", function () {\r\n    pm.response.to.have.status(200)\r\n});\r\n\r\npm.test(\"Booking details are updated\", function () {\r\n    const requestBody = JSON.parse(pm.request.body.raw);\r\n    const response = pm.response.json();\r\n    pm.expect(response.firstname).to.eql(requestBody.firstname);\r\n});\r\n\r\npm.test(\"All booking details are filled and have a correct format\", () => {\r\n    const schema = {\r\n    \"$schema\": \"http://json-schema.org/draft-07/schema#\",\r\n    \"type\": \"object\",\r\n    \"required\": [\"firstname\", \"lastname\", \"totalprice\", \"depositpaid\", \"bookingdates\", \"additionalneeds\"],\r\n    \"properties\": {\r\n        \"firstname\": { \"type\": \"string\", \"minLength\": 1 },\r\n        \"lastname\": { \"type\": \"string\", \"minLength\": 1 },\r\n        \"totalprice\": { \"type\": \"integer\", \"minimum\": 0 },\r\n        \"depositpaid\": { \"type\": \"boolean\" },\r\n        \"bookingdates\": {\r\n            \"type\": \"object\",\r\n            \"required\": [\"checkin\", \"checkout\"],\r\n            \"properties\": {\r\n                \"checkin\": { \"type\": \"string\", \"format\": \"date\" },\r\n                \"checkout\": { \"type\": \"string\", \"format\": \"date\" }\r\n                },\r\n                \"additionalProperties\": false\r\n            },\r\n        \"additionalneeds\": { \"type\": \"string\" }\r\n        },\r\n    \"additionalProperties\": false\r\n};\r\npm.response.to.have.jsonSchema(schema);\r\n});"
-                    ]
-                  }
-                },
-                {
-                  "listen": "prerequest",
-                  "script": {
-                    "type": "text/javascript",
-                    "exec": [
-                      "// create new booking\r\nconst newBookingUrl = pm.environment.get(\"HerokuApp\") + \"/booking\";\r\nconst newBookingDetails = {\r\n\tfirstname : \"Oceane\",\r\n\tlastname : \"Kilback\",\r\n    totalprice : 420,\r\n\tdepositpaid : false,\r\n\tbookingdates : {\r\n    \tcheckin : \"2025-01-20\",\r\n    \tcheckout : \"2025-01-28\"\r\n\t},\r\n\tadditionalneeds : \"Computer\"\r\n}\r\npm.sendRequest({\r\n    url: newBookingUrl,\r\n    method: 'POST',\r\n    header: {\r\n        'Content-Type': 'application/json',\r\n        'Accept': 'application/json'\r\n    },\r\n    body: {\r\n        mode: 'raw',\r\n        raw: JSON.stringify(newBookingDetails)\r\n    }\r\n}, function (error, response) {\r\n    if (error) {\r\n        console.error('Error creating new booking:', error);\r\n    } else {\r\n        const jsonData = response.json()\r\n        pm.environment.set(\"booking_id_new\", jsonData.bookingid);\r\n        console.log(\"New booking ID:\", jsonData.bookingid);\r\n    }\r\n});"
-                    ]
-                  }
-                }
-              ],
-              "protocolProfileBehavior": {
-                "disabledSystemHeaders": {
-                  "accept": true
-                }
-              },
-              "request": {
-                "auth": {
-                  "type": "noauth"
-                },
-                "method": "PATCH",
-                "header": [
-                  {
-                    "key": "Content-Type",
-                    "value": "application/json"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  },
-                  {
-                    "key": "Authorization",
-                    "value": "Basic YWRtaW46cGFzc3dvcmQxMjM="
-                  }
-                ],
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\r\n\t\"firstname\" : \"Jerry\"\r\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                },
-                "url": {
-                  "raw": "{{HerokuApp}}/booking/{{booking_id_new}}",
-                  "host": [
-                    "{{HerokuApp}}"
-                  ],
-                  "path": [
-                    "booking",
-                    "{{booking_id_new}}"
-                  ]
-                }
-              },
-              "response": []
-            },
-            {
-              "name": "PartUpd_booking (BA-auth) (pos_2)",
-              "event": [
-                {
-                  "listen": "test",
-                  "script": {
-                    "type": "text/javascript",
-                    "exec": [
-                      "pm.test(\"Status code is 200\", function () {\r\n    pm.response.to.have.status(200)\r\n});\r\n\r\npm.test(\"Booking details are updated\", function () {\r\n    const requestBody = JSON.parse(pm.request.body.raw);\r\n    const response = pm.response.json();\r\n    pm.expect(response.firstname).to.eql(requestBody.firstname);\r\n    pm.expect(response.totalprice).to.eql(requestBody.totalprice);\r\n});\r\n\r\npm.test(\"All booking details are filled and have a correct format\", () => {\r\n    const schema = {\r\n    \"$schema\": \"http://json-schema.org/draft-07/schema#\",\r\n    \"type\": \"object\",\r\n    \"required\": [\"firstname\", \"lastname\", \"totalprice\", \"depositpaid\", \"bookingdates\", \"additionalneeds\"],\r\n    \"properties\": {\r\n        \"firstname\": { \"type\": \"string\", \"minLength\": 1 },\r\n        \"lastname\": { \"type\": \"string\", \"minLength\": 1 },\r\n        \"totalprice\": { \"type\": \"integer\", \"minimum\": 0 },\r\n        \"depositpaid\": { \"type\": \"boolean\" },\r\n        \"bookingdates\": {\r\n            \"type\": \"object\",\r\n            \"required\": [\"checkin\", \"checkout\"],\r\n            \"properties\": {\r\n                \"checkin\": { \"type\": \"string\", \"format\": \"date\" },\r\n                \"checkout\": { \"type\": \"string\", \"format\": \"date\" }\r\n                },\r\n                \"additionalProperties\": false\r\n            },\r\n        \"additionalneeds\": { \"type\": \"string\" }\r\n        },\r\n    \"additionalProperties\": false\r\n};\r\npm.response.to.have.jsonSchema(schema);\r\n});"
-                    ]
-                  }
-                },
-                {
-                  "listen": "prerequest",
-                  "script": {
-                    "type": "text/javascript",
-                    "exec": [
-                      "// create new booking\r\nconst newBookingUrl = pm.environment.get(\"HerokuApp\") + \"/booking\";\r\nconst newBookingDetails = {\r\n\tfirstname : \"Oceane\",\r\n\tlastname : \"Kilback\",\r\n    totalprice : 420,\r\n\tdepositpaid : false,\r\n\tbookingdates : {\r\n    \tcheckin : \"2025-01-20\",\r\n    \tcheckout : \"2025-01-28\"\r\n\t},\r\n\tadditionalneeds : \"Computer\"\r\n}\r\npm.sendRequest({\r\n    url: newBookingUrl,\r\n    method: 'POST',\r\n    header: {\r\n        'Content-Type': 'application/json',\r\n        'Accept': 'application/json'\r\n    },\r\n    body: {\r\n        mode: 'raw',\r\n        raw: JSON.stringify(newBookingDetails)\r\n    }\r\n}, function (error, response) {\r\n    if (error) {\r\n        console.error('Error creating new booking:', error);\r\n    } else {\r\n        const jsonData = response.json()\r\n        pm.environment.set(\"booking_id_new\", jsonData.bookingid);\r\n        console.log(\"New booking ID:\", jsonData.bookingid);\r\n    }\r\n});"
-                    ]
-                  }
-                }
-              ],
-              "protocolProfileBehavior": {
-                "disabledSystemHeaders": {
-                  "accept": true
-                }
-              },
-              "request": {
-                "auth": {
-                  "type": "noauth"
-                },
-                "method": "PATCH",
-                "header": [
-                  {
-                    "key": "Content-Type",
-                    "value": "application/json"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  },
-                  {
-                    "key": "Authorization",
-                    "value": "Basic YWRtaW46cGFzc3dvcmQxMjM="
-                  }
-                ],
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\r\n\t\"firstname\" : \"Jerry\",\r\n\t\"totalprice\" : 999\r\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                },
-                "url": {
-                  "raw": "{{HerokuApp}}/booking/{{booking_id_new}}",
-                  "host": [
-                    "{{HerokuApp}}"
-                  ],
-                  "path": [
-                    "booking",
-                    "{{booking_id_new}}"
-                  ]
-                }
-              },
-              "response": []
-            },
-            {
-              "name": "PartUpd_booking (BA-auth) (pos_3)",
-              "event": [
-                {
-                  "listen": "test",
-                  "script": {
-                    "type": "text/javascript",
-                    "exec": [
-                      "pm.test(\"Status code is 200\", function () {\r\n    pm.response.to.have.status(200)\r\n});\r\n\r\npm.test(\"Booking details are updated\", function () {\r\n    const requestBody = JSON.parse(pm.request.body.raw);\r\n    const response = pm.response.json();\r\n    pm.expect(response.bookingdates.checkin).to.eql(requestBody.bookingdates.checkin);\r\n    pm.expect(response.bookingdates.checkout).to.eql(requestBody.bookingdates.checkout);\r\n});\r\n\r\npm.test(\"All booking details are filled and have a correct format\", () => {\r\n    const schema = {\r\n    \"$schema\": \"http://json-schema.org/draft-07/schema#\",\r\n    \"type\": \"object\",\r\n    \"required\": [\"firstname\", \"lastname\", \"totalprice\", \"depositpaid\", \"bookingdates\", \"additionalneeds\"],\r\n    \"properties\": {\r\n        \"firstname\": { \"type\": \"string\", \"minLength\": 1 },\r\n        \"lastname\": { \"type\": \"string\", \"minLength\": 1 },\r\n        \"totalprice\": { \"type\": \"integer\", \"minimum\": 0 },\r\n        \"depositpaid\": { \"type\": \"boolean\" },\r\n        \"bookingdates\": {\r\n            \"type\": \"object\",\r\n            \"required\": [\"checkin\", \"checkout\"],\r\n            \"properties\": {\r\n                \"checkin\": { \"type\": \"string\", \"format\": \"date\" },\r\n                \"checkout\": { \"type\": \"string\", \"format\": \"date\" }\r\n                },\r\n                \"additionalProperties\": false\r\n            },\r\n        \"additionalneeds\": { \"type\": \"string\" }\r\n        },\r\n    \"additionalProperties\": false\r\n};\r\npm.response.to.have.jsonSchema(schema);\r\n});"
-                    ]
-                  }
-                },
-                {
-                  "listen": "prerequest",
-                  "script": {
-                    "type": "text/javascript",
-                    "exec": [
-                      "// create new booking\r\nconst newBookingUrl = pm.environment.get(\"HerokuApp\") + \"/booking\";\r\nconst newBookingDetails = {\r\n\tfirstname : \"Oceane\",\r\n\tlastname : \"Kilback\",\r\n    totalprice : 420,\r\n\tdepositpaid : false,\r\n\tbookingdates : {\r\n    \tcheckin : \"2025-01-20\",\r\n    \tcheckout : \"2025-01-28\"\r\n\t},\r\n\tadditionalneeds : \"Computer\"\r\n}\r\npm.sendRequest({\r\n    url: newBookingUrl,\r\n    method: 'POST',\r\n    header: {\r\n        'Content-Type': 'application/json',\r\n        'Accept': 'application/json'\r\n    },\r\n    body: {\r\n        mode: 'raw',\r\n        raw: JSON.stringify(newBookingDetails)\r\n    }\r\n}, function (error, response) {\r\n    if (error) {\r\n        console.error('Error creating new booking:', error);\r\n    } else {\r\n        const jsonData = response.json()\r\n        pm.environment.set(\"booking_id_new\", jsonData.bookingid);\r\n        console.log(\"New booking ID:\", jsonData.bookingid);\r\n    }\r\n});\r\n\r\n// checkin\r\nconst moment = require('moment');\r\n// Set today's date and format it\r\nconst today = moment();\r\nconst new_checkin = today.add(180, 'days').format(\"YYYY-MM-DD\");\r\npm.environment.set(\"new_checkin\", new_checkin);\r\nconsole.log(\"Check-in Date:\", new_checkin);\r\n\r\n// checkout\r\nconst new_checkout = moment(new_checkin).add(5, 'days').format(\"YYYY-MM-DD\");\r\npm.environment.set(\"new_checkout\", new_checkout);\r\nconsole.log(\"Check-out Date:\", new_checkout);"
-                    ]
-                  }
-                }
-              ],
-              "protocolProfileBehavior": {
-                "disabledSystemHeaders": {
-                  "accept": true
-                }
-              },
-              "request": {
-                "auth": {
-                  "type": "noauth"
-                },
-                "method": "PATCH",
-                "header": [
-                  {
-                    "key": "Content-Type",
-                    "value": "application/json"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  },
-                  {
-                    "key": "Authorization",
-                    "value": "Basic YWRtaW46cGFzc3dvcmQxMjM="
-                  }
-                ],
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\r\n\"bookingdates\" : {\r\n    \t\"checkin\" : \"{{new_checkin}}\",\r\n    \t\"checkout\" : \"{{new_checkout}}\"\r\n\t}\r\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -4447,17 +5549,26 @@
           ]
         },
         {
-          "name": "5.4. booking/:id (DELETE)",
+          "name": "4.4. booking/:id (DELETE)",
           "item": [
             {
-              "name": "Delete_booking (auth by access token)",
+              "name": "Удаление существующего бронирования (Token-auth)",
               "event": [
                 {
                   "listen": "test",
                   "script": {
                     "type": "text/javascript",
                     "exec": [
-                      "// Basic response validation\r\npm.test(\"Status code is 201\", function () {\r\n    pm.response.to.have.status(201);\r\n});\r\n\r\npm.test(\"Response time is less than 1000ms\", function () {\r\n    pm.expect(pm.response.responseTime).to.be.below(1000);\r\n});\r\n\r\n// Requst specific response validation\r\npm.test(\"Response body is 'Created'\", function () {\r\n    pm.expect(pm.response.text()).to.eql('Created');\r\n});"
+                      "pm.test(\"Status code is 201\", function () {\r\n    pm.response.to.have.status(201);\r\n});\r\n\r\n// check if bookingId is deleted\r\nconst deletedBooking = pm.environment.get(\"HerokuApp\") + \"/booking/\" + pm.environment.get(\"booking_id_new\");\r\npm.test(\"Booking is successfully deleted\", function () {\r\n    pm.sendRequest({\r\n        url: deletedBooking,\r\n        method: 'GET',\r\n        header: {\r\n            'Content-Type': 'application/json',\r\n            'Accept': 'application/json'\r\n        }\r\n    }, function (error, response) {\r\n        if (error)\r\n            throw new Error(\"Something went wrong\");\r\n        else {\r\n            pm.expect(response.code).to.eql(404);\r\n        }\r\n    });\r\n});"
+                    ]
+                  }
+                },
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "// run auth\r\nconst authUrl = pm.environment.get(\"HerokuApp\") + \"/auth\";\r\nconst authData = {\r\n    username: pm.environment.get(\"admin_username\"),\r\n    password: pm.environment.get(\"admin_password\")\r\n};\r\n\r\npm.sendRequest({\r\n    url: authUrl,\r\n    method: 'POST',\r\n    header: {\r\n        'Content-Type': 'application/json',\r\n        'Accept': 'application/json'\r\n    },\r\n    body: {\r\n        mode: 'raw',\r\n        raw: JSON.stringify(authData)\r\n    }\r\n}, function (error, response) {\r\n    if (error) {\r\n        console.error('Error during authentication:', error);\r\n    } else {\r\n        const authResponse = response.json();\r\n        pm.environment.set(\"access_token\", authResponse.token);\r\n        console.log(\"Access Token:\", authResponse.token);\r\n    }\r\n});\r\n\r\n// create new booking\r\nconst newBookingUrl = pm.environment.get(\"HerokuApp\") + \"/booking\";\r\nconst newBookingDetails = {\r\n    firstname: \"Oceane\",\r\n    lastname: \"Kilback\",\r\n    totalprice: 420,\r\n    depositpaid: false,\r\n    bookingdates: {\r\n        checkin: \"2025-01-20\",\r\n        checkout: \"2025-01-28\"\r\n    },\r\n    additionalneeds: \"Computer\"\r\n}\r\npm.sendRequest({\r\n    url: newBookingUrl,\r\n    method: 'POST',\r\n    header: {\r\n        'Content-Type': 'application/json',\r\n        'Accept': 'application/json'\r\n    },\r\n    body: {\r\n        mode: 'raw',\r\n        raw: JSON.stringify(newBookingDetails)\r\n    }\r\n}, function (error, response) {\r\n    if (error) {\r\n        console.error('Error creating new booking:', error);\r\n    } else {\r\n        const jsonData = response.json()\r\n        pm.environment.set(\"booking_id_new\", jsonData.bookingid);\r\n        console.log(\"New booking ID:\", jsonData.bookingid);\r\n    }\r\n});"
                     ]
                   }
                 }
@@ -4484,14 +5595,23 @@
               "response": []
             },
             {
-              "name": "Delete_booking (auth by BasicAuth)",
+              "name": "Удаление существующего бронирования (BA-auth)",
               "event": [
                 {
                   "listen": "test",
                   "script": {
                     "type": "text/javascript",
                     "exec": [
-                      "// Basic response validation\r\npm.test(\"Status code is 201\", function () {\r\n    pm.response.to.have.status(201);\r\n});\r\n\r\npm.test(\"Response time is less than 1000ms\", function () {\r\n    pm.expect(pm.response.responseTime).to.be.below(1000);\r\n});\r\n\r\n// Requst specific response validation\r\npm.test(\"Response body is 'Created'\", function () {\r\n    pm.expect(pm.response.text()).to.eql('Created');\r\n});"
+                      "pm.test(\"Status code is 201\", function () {\r\n    pm.response.to.have.status(201);\r\n});\r\n\r\n// check if bookingId is deleted\r\nconst deletedBooking = pm.environment.get(\"HerokuApp\") + \"/booking/\" + pm.environment.get(\"booking_id_new\");\r\npm.test(\"Booking is successfully deleted\", function () {\r\n    pm.sendRequest({\r\n        url: deletedBooking,\r\n        method: 'GET',\r\n        header: {\r\n            'Content-Type': 'application/json',\r\n            'Accept': 'application/json'\r\n        }\r\n    }, function (error, response) {\r\n        if (error)\r\n            throw new Error(\"Something went wrong\");\r\n        else {\r\n            pm.expect(response.code).to.eql(404);\r\n        }\r\n    });\r\n});"
+                    ]
+                  }
+                },
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "// create new booking\r\nconst newBookingUrl = pm.environment.get(\"HerokuApp\") + \"/booking\";\r\nconst newBookingDetails = {\r\n    firstname: \"Oceane\",\r\n    lastname: \"Kilback\",\r\n    totalprice: 420,\r\n    depositpaid: false,\r\n    bookingdates: {\r\n        checkin: \"2025-01-20\",\r\n        checkout: \"2025-01-28\"\r\n    },\r\n    additionalneeds: \"Computer\"\r\n}\r\npm.sendRequest({\r\n    url: newBookingUrl,\r\n    method: 'POST',\r\n    header: {\r\n        'Content-Type': 'application/json',\r\n        'Accept': 'application/json'\r\n    },\r\n    body: {\r\n        mode: 'raw',\r\n        raw: JSON.stringify(newBookingDetails)\r\n    }\r\n}, function (error, response) {\r\n    if (error) {\r\n        console.error('Error creating new booking:', error);\r\n    } else {\r\n        const jsonData = response.json()\r\n        pm.environment.set(\"booking_id_new\", jsonData.bookingid);\r\n        console.log(\"New booking ID:\", jsonData.bookingid);\r\n    }\r\n});"
                     ]
                   }
                 }
@@ -4516,6 +5636,264 @@
                 }
               },
               "response": []
+            },
+            {
+              "name": "Удаление бронирования (DELETE без авторизации)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 403\", function () {\r\n    pm.response.to.have.status(403);\r\n});\r\n\r\npm.test(\"Response body is not JSON\", function () {\r\n    pm.expect(pm.response.headers.get(\"Content-Type\")).to.not.include(\"application/json\");\r\n});"
+                    ]
+                  }
+                },
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "// run auth\r\nconst authUrl = pm.environment.get(\"HerokuApp\") + \"/auth\";\r\nconst authData = {\r\n    username: pm.environment.get(\"admin_username\"),\r\n    password: pm.environment.get(\"admin_password\")\r\n};\r\n\r\npm.sendRequest({\r\n    url: authUrl,\r\n    method: 'POST',\r\n    header: {\r\n        'Content-Type': 'application/json',\r\n        'Accept': 'application/json'\r\n    },\r\n    body: {\r\n        mode: 'raw',\r\n        raw: JSON.stringify(authData)\r\n    }\r\n}, function (error, response) {\r\n    if (error) {\r\n        console.error('Error during authentication:', error);\r\n    } else {\r\n        const authResponse = response.json();\r\n        pm.environment.set(\"access_token\", authResponse.token);\r\n        console.log(\"Access Token:\", authResponse.token);\r\n    }\r\n});\r\n\r\n// create new booking\r\nconst newBookingUrl = pm.environment.get(\"HerokuApp\") + \"/booking\";\r\nconst newBookingDetails = {\r\n\tfirstname : \"Oceane\",\r\n\tlastname : \"Kilback\",\r\n    totalprice : 420,\r\n\tdepositpaid : false,\r\n\tbookingdates : {\r\n    \tcheckin : \"2025-01-20\",\r\n    \tcheckout : \"2025-01-28\"\r\n\t},\r\n\tadditionalneeds : \"Computer\"\r\n}\r\npm.sendRequest({\r\n    url: newBookingUrl,\r\n    method: 'POST',\r\n    header: {\r\n        'Content-Type': 'application/json',\r\n        'Accept': 'application/json'\r\n    },\r\n    body: {\r\n        mode: 'raw',\r\n        raw: JSON.stringify(newBookingDetails)\r\n    }\r\n}, function (error, response) {\r\n    if (error) {\r\n        console.error('Error creating new booking:', error);\r\n    } else {\r\n        const jsonData = response.json()\r\n        pm.environment.set(\"booking_id_new\", jsonData.bookingid);\r\n        console.log(\"New booking ID:\", jsonData.bookingid);\r\n    }\r\n});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{HerokuApp}}/booking/{{booking_id_new}}",
+                  "host": [
+                    "{{HerokuApp}}"
+                  ],
+                  "path": [
+                    "booking",
+                    "{{booking_id_new}}"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Удаление бронирования (DELETE с неверным токеном)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 403\", function () {\r\n    pm.response.to.have.status(403);\r\n});\r\n\r\npm.test(\"Response body is not JSON\", function () {\r\n    pm.expect(pm.response.headers.get(\"Content-Type\")).to.not.include(\"application/json\");\r\n});"
+                    ]
+                  }
+                },
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "// run auth\r\nconst authUrl = pm.environment.get(\"HerokuApp\") + \"/auth\";\r\nconst authData = {\r\n    username: pm.environment.get(\"admin_username\"),\r\n    password: pm.environment.get(\"admin_password\")\r\n};\r\n\r\npm.sendRequest({\r\n    url: authUrl,\r\n    method: 'POST',\r\n    header: {\r\n        'Content-Type': 'application/json',\r\n        'Accept': 'application/json'\r\n    },\r\n    body: {\r\n        mode: 'raw',\r\n        raw: JSON.stringify(authData)\r\n    }\r\n}, function (error, response) {\r\n    if (error) {\r\n        console.error('Error during authentication:', error);\r\n    } else {\r\n        const authResponse = response.json();\r\n        pm.variables.set(\"access_token\", authResponse.token);\r\n        console.log(\"Access Token:\", authResponse.token);\r\n    }\r\n});\r\n\r\n// create new booking\r\nconst newBookingUrl = pm.environment.get(\"HerokuApp\") + \"/booking\";\r\nconst newBookingDetails = {\r\n\tfirstname : \"Oceane\",\r\n\tlastname : \"Kilback\",\r\n    totalprice : 420,\r\n\tdepositpaid : false,\r\n\tbookingdates : {\r\n    \tcheckin : \"2025-01-20\",\r\n    \tcheckout : \"2025-01-28\"\r\n\t},\r\n\tadditionalneeds : \"Computer\"\r\n}\r\npm.sendRequest({\r\n    url: newBookingUrl,\r\n    method: 'POST',\r\n    header: {\r\n        'Content-Type': 'application/json',\r\n        'Accept': 'application/json'\r\n    },\r\n    body: {\r\n        mode: 'raw',\r\n        raw: JSON.stringify(newBookingDetails)\r\n    }\r\n}, function (error, response) {\r\n    if (error) {\r\n        console.error('Error creating new booking:', error);\r\n    } else {\r\n        const jsonData = response.json()\r\n        pm.environment.set(\"booking_id_new\", jsonData.bookingid);\r\n        console.log(\"New booking ID:\", jsonData.bookingid);\r\n    }\r\n});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Cookie",
+                    "value": "token=invalidtoken123"
+                  }
+                ],
+                "url": {
+                  "raw": "{{HerokuApp}}/booking/{{booking_id_new}}",
+                  "host": [
+                    "{{HerokuApp}}"
+                  ],
+                  "path": [
+                    "booking",
+                    "{{booking_id_new}}"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Удаление бронирования (DELETE с авторизацией через Authorization-заголовок вместо Cookie)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 403\", function () {\r\n    pm.response.to.have.status(403);\r\n});\r\n\r\npm.test(\"Response body is not JSON\", function () {\r\n    pm.expect(pm.response.headers.get(\"Content-Type\")).to.not.include(\"application/json\");\r\n});"
+                    ]
+                  }
+                },
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "// run auth\r\nconst authUrl = pm.environment.get(\"HerokuApp\") + \"/auth\";\r\nconst authData = {\r\n    username: pm.environment.get(\"admin_username\"),\r\n    password: pm.environment.get(\"admin_password\")\r\n};\r\n\r\npm.sendRequest({\r\n    url: authUrl,\r\n    method: 'POST',\r\n    header: {\r\n        'Content-Type': 'application/json',\r\n        'Accept': 'application/json'\r\n    },\r\n    body: {\r\n        mode: 'raw',\r\n        raw: JSON.stringify(authData)\r\n    }\r\n}, function (error, response) {\r\n    if (error) {\r\n        console.error('Error during authentication:', error);\r\n    } else {\r\n        const authResponse = response.json();\r\n        pm.variables.set(\"access_token\", authResponse.token);\r\n        console.log(\"Access Token:\", authResponse.token);\r\n    }\r\n});\r\n\r\n// create new booking\r\nconst newBookingUrl = pm.environment.get(\"HerokuApp\") + \"/booking\";\r\nconst newBookingDetails = {\r\n\tfirstname : \"Oceane\",\r\n\tlastname : \"Kilback\",\r\n    totalprice : 420,\r\n\tdepositpaid : false,\r\n\tbookingdates : {\r\n    \tcheckin : \"2025-01-20\",\r\n    \tcheckout : \"2025-01-28\"\r\n\t},\r\n\tadditionalneeds : \"Computer\"\r\n}\r\npm.sendRequest({\r\n    url: newBookingUrl,\r\n    method: 'POST',\r\n    header: {\r\n        'Content-Type': 'application/json',\r\n        'Accept': 'application/json'\r\n    },\r\n    body: {\r\n        mode: 'raw',\r\n        raw: JSON.stringify(newBookingDetails)\r\n    }\r\n}, function (error, response) {\r\n    if (error) {\r\n        console.error('Error creating new booking:', error);\r\n    } else {\r\n        const jsonData = response.json()\r\n        pm.environment.set(\"booking_id_new\", jsonData.bookingid);\r\n        console.log(\"New booking ID:\", jsonData.bookingid);\r\n    }\r\n});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{access_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{HerokuApp}}/booking/{{booking_id_new}}",
+                  "host": [
+                    "{{HerokuApp}}"
+                  ],
+                  "path": [
+                    "booking",
+                    "{{booking_id_new}}"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Удаление бронирования (DELETE несуществующего бронирования)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 404\", function () {\r\n    pm.response.to.have.status(404);\r\n});\r\n\r\npm.test(\"Response body is not JSON\", function () {\r\n    pm.expect(pm.response.headers.get(\"Content-Type\")).to.not.include(\"application/json\");\r\n});"
+                    ]
+                  }
+                },
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "// run auth\r\nconst authUrl = pm.environment.get(\"HerokuApp\") + \"/auth\";\r\nconst authData = {\r\n    username: pm.environment.get(\"admin_username\"),\r\n    password: pm.environment.get(\"admin_password\")\r\n};\r\n\r\npm.sendRequest({\r\n    url: authUrl,\r\n    method: 'POST',\r\n    header: {\r\n        'Content-Type': 'application/json',\r\n        'Accept': 'application/json'\r\n    },\r\n    body: {\r\n        mode: 'raw',\r\n        raw: JSON.stringify(authData)\r\n    }\r\n}, function (error, response) {\r\n    if (error) {\r\n        console.error('Error during authentication:', error);\r\n    } else {\r\n        const authResponse = response.json();\r\n        pm.environment.set(\"access_token\", authResponse.token);\r\n        console.log(\"Access Token:\", authResponse.token);\r\n    }\r\n});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Cookie",
+                    "value": "token={{access_token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{HerokuApp}}/booking/{{nonValidBookingId}}",
+                  "host": [
+                    "{{HerokuApp}}"
+                  ],
+                  "path": [
+                    "booking",
+                    "{{nonValidBookingId}}"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Удаление бронирования (DELETE с буквенным ID)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 404\", function () {\r\n    pm.response.to.have.status(404);\r\n});\r\n\r\npm.test(\"Response body is not JSON\", function () {\r\n    pm.expect(pm.response.headers.get(\"Content-Type\")).to.not.include(\"application/json\");\r\n});"
+                    ]
+                  }
+                },
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "// run auth\r\nconst authUrl = pm.environment.get(\"HerokuApp\") + \"/auth\";\r\nconst authData = {\r\n    username: pm.environment.get(\"admin_username\"),\r\n    password: pm.environment.get(\"admin_password\")\r\n};\r\n\r\npm.sendRequest({\r\n    url: authUrl,\r\n    method: 'POST',\r\n    header: {\r\n        'Content-Type': 'application/json',\r\n        'Accept': 'application/json'\r\n    },\r\n    body: {\r\n        mode: 'raw',\r\n        raw: JSON.stringify(authData)\r\n    }\r\n}, function (error, response) {\r\n    if (error) {\r\n        console.error('Error during authentication:', error);\r\n    } else {\r\n        const authResponse = response.json();\r\n        pm.environment.set(\"access_token\", authResponse.token);\r\n        console.log(\"Access Token:\", authResponse.token);\r\n    }\r\n});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Cookie",
+                    "value": "token={{access_token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{HerokuApp}}/booking/id",
+                  "host": [
+                    "{{HerokuApp}}"
+                  ],
+                  "path": [
+                    "booking",
+                    "id"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Удаление бронирования (Повторное удаление того же бронирования)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 404\", function () {\r\n    pm.response.to.have.status(404);\r\n});\r\n\r\npm.test(\"Response body is not JSON\", function () {\r\n    pm.expect(pm.response.headers.get(\"Content-Type\")).to.not.include(\"application/json\");\r\n});"
+                    ]
+                  }
+                },
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "// run auth\r\nconst authUrl = pm.collectionVariables.get(\"HerokuApp\") + \"/auth\";\r\nconst authData = {\r\n    username: pm.collectionVariables.get(\"admin_username\"),\r\n    password: pm.collectionVariables.get(\"admin_password\")\r\n};\r\n\r\npm.sendRequest({\r\n    url: authUrl,\r\n    method: 'POST',\r\n    header: {\r\n        'Content-Type': 'application/json',\r\n        'Accept': 'application/json'\r\n    },\r\n    body: {\r\n        mode: 'raw',\r\n        raw: JSON.stringify(authData)\r\n    }\r\n}, function (error, response) {\r\n    if (error) {\r\n        console.error('Error during authentication:', error);\r\n    } else {\r\n        const authResponse = response.json();\r\n        pm.collectionVariables.set(\"access_token\", authResponse.token);\r\n        console.log(\"Access Token:\", authResponse.token);\r\n    }\r\n\r\n\r\n// create new booking\r\nconst newBookingUrl = pm.collectionVariables.get(\"HerokuApp\") + \"/booking\";\r\nconst newBookingDetails = {\r\n\tfirstname : \"Oceane\",\r\n\tlastname : \"Kilback\",\r\n    totalprice : 420,\r\n\tdepositpaid : false,\r\n\tbookingdates : {\r\n    \tcheckin : \"2025-01-20\",\r\n    \tcheckout : \"2025-01-28\"\r\n\t},\r\n\tadditionalneeds : \"Computer\"\r\n}\r\npm.sendRequest({\r\n    url: newBookingUrl,\r\n    method: 'POST',\r\n    header: {\r\n        'Content-Type': 'application/json',\r\n        'Accept': 'application/json'\r\n    },\r\n    body: {\r\n        mode: 'raw',\r\n        raw: JSON.stringify(newBookingDetails)\r\n    }\r\n}, function (error, response) {\r\n    if (error) {\r\n        console.error('Error creating new booking:', error);\r\n    } else {\r\n        const jsonData = response.json()\r\n        pm.environment.set(\"booking_id_new\", jsonData.bookingid);\r\n        console.log(\"New booking ID:\", jsonData.bookingid);\r\n    }\r\n    // delete booking\r\n    const delBooking = pm.environment.get(\"HerokuApp\") + \"/booking/\" + pm.environment.get(\"booking_id_new\");\r\n    pm.sendRequest({\r\n        url: delBooking,\r\n        method: 'DELETE',\r\n        header: {\r\n            'Cookie': 'token=' + pm.environment.get(\"access_token\")\r\n            }\r\n        }, function (error, response) {\r\n            if (response) {\r\n                pm.expect(response.text()).to.equal(\"Created\");\r\n                console.log(\"Booking deleted successfully\");\r\n                }\r\n            else {\r\n                console.error('Error deleting booking:', error);\r\n                }\r\n    });\r\n});\r\n});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Cookie",
+                    "value": "token={{access_token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{HerokuApp}}/booking/{{booking_id_new}}",
+                  "host": [
+                    "{{HerokuApp}}"
+                  ],
+                  "path": [
+                    "booking",
+                    "{{booking_id_new}}"
+                  ]
+                }
+              },
+              "response": []
             }
           ]
         }
@@ -4525,7 +5903,15 @@
   "variable": [
     {
       "key": "HerokuApp",
-      "value": ""
+      "value": "https://restful-booker.herokuapp.com"
+    },
+    {
+      "key": "admin_username",
+      "value": "admin"
+    },
+    {
+      "key": "admin_password",
+      "value": "password123"
     },
     {
       "key": "access_token",
@@ -4533,18 +5919,30 @@
     },
     {
       "key": "booking_id",
-      "value": ""
+      "value": "8"
     },
     {
       "key": "booking_id_new",
       "value": ""
     },
     {
-      "key": "admin_username",
+      "key": "paramCheck",
       "value": ""
     },
     {
-      "key": "admin_password",
+      "key": "firstname",
+      "value": ""
+    },
+    {
+      "key": "lastname",
+      "value": ""
+    },
+    {
+      "key": "totalprice",
+      "value": ""
+    },
+    {
+      "key": "depositpaid",
       "value": ""
     },
     {
@@ -4556,6 +5954,10 @@
       "value": ""
     },
     {
+      "key": "additionalneeds",
+      "value": ""
+    },
+    {
       "key": "new_checkin",
       "value": ""
     },
@@ -4564,8 +5966,48 @@
       "value": ""
     },
     {
-      "key": "nonValidBookingId",
+      "key": "tempFirstname",
       "value": ""
+    },
+    {
+      "key": "tempLastname",
+      "value": ""
+    },
+    {
+      "key": "tempTotalprice",
+      "value": ""
+    },
+    {
+      "key": "tempDepositpaid",
+      "value": ""
+    },
+    {
+      "key": "tempCheckin",
+      "value": ""
+    },
+    {
+      "key": "tempCheckout",
+      "value": ""
+    },
+    {
+      "key": "tempAdditionalneeds",
+      "value": ""
+    },
+    {
+      "key": "nonValidBookingId",
+      "value": "9999"
+    },
+    {
+      "key": "xlBookingid",
+      "value": "99999999999999999999"
+    },
+    {
+      "key": "txtBookingid",
+      "value": "someText"
+    },
+    {
+      "key": "JSON_schema",
+      "value": "{\"$schema\": \"http://json-schema.org/draft-07/schema#\",\"type\": \"object\",\"required\": [\"firstname\", \"lastname\", \"totalprice\", \"depositpaid\", \"bookingdates\", \"additionalneeds\"],\"properties\": {\"firstname\": { \"type\": \"string\", \"minLength\": 1 },\"lastname\": { \"type\": \"string\", \"minLength\": 1 },\"totalprice\": { \"type\": \"integer\", \"minimum\": 0 },\"depositpaid\": { \"type\": \"boolean\" },\"bookingdates\": {\"type\": \"object\",\"required\": [\"checkin\", \"checkout\"],\"properties\": {\"checkin\": { \"type\": \"string\", \"format\": \"date\" },\"checkout\": { \"type\": \"string\", \"format\": \"date\" }},\"additionalProperties\": false},\"additionalneeds\": { \"type\": \"string\" }},\"additionalProperties\": false}"
     }
   ]
 }
